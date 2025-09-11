@@ -29,7 +29,6 @@ from strings import get_string
 
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
-@LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
@@ -78,7 +77,6 @@ async def start_pm(client, message: Message, _):
 
 
 @app.on_message(filters.command(["starrt"]) & filters.group & ~BANNED_USERS)
-@LanguageStart
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
