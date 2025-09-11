@@ -19,7 +19,7 @@ from random import  choice, randint
 async def huhh(client: Client, message: Message):
     await message.reply_photo(
         photo=f"https://forkgraph.zaid.pro/file/mZMkbE56phEY",
-        caption = f"""<b>  <b>\n<a href="https://t.me/cecrr"> ➮ 𝐰𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐒𝐨𝐮𝐫𝐜𝐞 </a></b>""",
+        caption = f"""<b>  <b>\n<a href="https://t.me/shahmplus"> ➮ 𝐰𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐒𝐨𝐮𝐫𝐜𝐞 </a></b>""",
 reply_markup=InlineKeyboardMarkup(
             [
                 [
