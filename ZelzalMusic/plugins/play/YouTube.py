@@ -313,7 +313,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from youtube_search import YoutubeSearch
 
 # المتغيرات العامة
-BUTTON_NAME = ماتركـس"
+BUTTON_NAME = "ماتـرڪس" 
 BUTTON_URL = "https://t.me/BDB0B"  # يمكن تغييرها عبر الأوامر
 disabled_chats = []
 GLOBAL_DOWNLOAD_DISABLED = False
