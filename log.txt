@@ -1,0 +1,199 @@
+[11-Sep-25 16:02:52 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 16:02:52 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 16:02:52 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 16:02:52 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 16:02:52 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 16:02:52 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 16:02:54 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 16:02:55 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 16:04:20 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 16:04:20 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 16:04:20 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 16:04:20 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 16:04:20 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 16:04:20 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 16:04:21 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 16:04:22 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 16:04:22 - INFO] - ZelzalMusic.plugins - Successfully Imported Modules...
+[11-Sep-25 16:04:22 - INFO] - ميــوزك زدثــون - جارِ تشغيل الحساب المساعد . . .
+[11-Sep-25 16:04:22 - INFO] - ميــوزك زدثــون - تم بدء تشغيل الحساب المساعد . ...✓
+[11-Sep-25 16:04:22 - INFO] - ميــوزك زدثــون - جارِ تحميل مكاتب الميوزك . . .
+
+[11-Sep-25 16:04:27 - INFO] - ZelzalMusic - تم تنصيب سورس بغداد ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر
+[11-Sep-25 16:13:06 - ERROR] - pyrogram.dispatcher - 'NoneType' object has no attribute 'can_manage_video_chats'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/dispatcher.py", line 373, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/root/music65/ZelzalMusic/utils/decorators/admins.py", line 139, in wrapper
+    if not member.can_manage_video_chats:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'can_manage_video_chats'
+[11-Sep-25 16:29:16 - ERROR] - pyrogram.dispatcher - 'NoneType' object has no attribute 'mention'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/dispatcher.py", line 373, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/root/music65/ZelzalMusic/utils/decorators/play.py", line 174, in wrapper
+    return await command(
+           ^^^^^^^^^^^^^^
+  File "/root/music65/ZelzalMusic/plugins/play/play.py", line 383, in play_commnd
+    return await play_logs(message, streamtype=streamtype)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/music65/ZelzalMusic/utils/logger.py", line 21, in play_logs
+    <b>- الاسم :</b> {message.from_user.mention}
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'mention'
+[11-Sep-25 17:48:03 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 17:48:03 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 17:48:03 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 17:48:03 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 17:48:03 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 17:48:03 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 17:48:04 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 17:55:46 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 17:55:46 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 17:55:46 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 17:55:46 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 17:55:46 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 17:55:46 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 17:55:47 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 17:55:49 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 17:55:49 - INFO] - ZelzalMusic.plugins - Successfully Imported Modules...
+[11-Sep-25 17:55:49 - INFO] - ميــوزك زدثــون - جارِ تشغيل الحساب المساعد . . .
+[11-Sep-25 17:55:50 - INFO] - ميــوزك زدثــون - تم بدء تشغيل الحساب المساعد . ...✓
+[11-Sep-25 17:55:50 - INFO] - ميــوزك زدثــون - جارِ تحميل مكاتب الميوزك . . .
+
+[11-Sep-25 17:55:50 - ERROR] - ZelzalMusic - Please turn on the videochat of your log group\channel.
+
+Stopping Bot...
+[11-Sep-25 17:56:15 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 17:56:15 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 17:56:15 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 17:56:15 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 17:56:15 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 17:56:15 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 17:56:16 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 17:56:16 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 17:56:16 - INFO] - ZelzalMusic.plugins - Successfully Imported Modules...
+[11-Sep-25 17:56:16 - INFO] - ميــوزك زدثــون - جارِ تشغيل الحساب المساعد . . .
+[11-Sep-25 17:56:16 - INFO] - ميــوزك زدثــون - تم بدء تشغيل الحساب المساعد . ...✓
+[11-Sep-25 17:56:16 - INFO] - ميــوزك زدثــون - جارِ تحميل مكاتب الميوزك . . .
+
+[11-Sep-25 17:56:18 - INFO] - ZelzalMusic - تم تنصيب سورس بغداد ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر
+[11-Sep-25 17:56:59 - ERROR] - pyrogram.dispatcher - Telegram says: [400 MESSAGE_NOT_MODIFIED] - The message was not modified because you tried to edit it using the same content. (caused by "messages.EditMessage")
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/dispatcher.py", line 373, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/root/music65/ZelzalMusic/utils/decorators/language.py", line 46, in wrapper
+    return await mystic(_, CallbackQuery, language)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/music65/ZelzalMusic/plugins/play/play.py", line 648, in slider_queries
+    return await CallbackQuery.edit_message_media(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/types/bots_and_keyboards/callback_query.py", line 308, in edit_message_media
+    return await self._client.edit_message_media(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/methods/messages/edit_message_media.py", line 284, in edit_message_media
+    r = await self.invoke(
+        ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/methods/advanced/invoke.py", line 98, in invoke
+    r = await session.invoke(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/session/session.py", line 551, in invoke
+    return await self.send(query, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/session/session.py", line 514, in send
+    RPCError.raise_it(result, type(data))
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/errors/rpc_error.py", line 91, in raise_it
+    raise getattr(
+pyrogram.errors.exceptions.bad_request_400.MessageNotModified: Telegram says: [400 MESSAGE_NOT_MODIFIED] - The message was not modified because you tried to edit it using the same content. (caused by "messages.EditMessage")
+[11-Sep-25 17:57:02 - ERROR] - pyrogram.dispatcher - Telegram says: [400 MESSAGE_NOT_MODIFIED] - The message was not modified because you tried to edit it using the same content. (caused by "messages.EditMessage")
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/dispatcher.py", line 373, in handler_worker
+    await handler.callback(self.client, *args)
+  File "/root/music65/ZelzalMusic/utils/decorators/language.py", line 46, in wrapper
+    return await mystic(_, CallbackQuery, language)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/music65/ZelzalMusic/plugins/play/play.py", line 648, in slider_queries
+    return await CallbackQuery.edit_message_media(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/types/bots_and_keyboards/callback_query.py", line 308, in edit_message_media
+    return await self._client.edit_message_media(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/methods/messages/edit_message_media.py", line 284, in edit_message_media
+    r = await self.invoke(
+        ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/methods/advanced/invoke.py", line 98, in invoke
+    r = await session.invoke(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/session/session.py", line 551, in invoke
+    return await self.send(query, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/session/session.py", line 514, in send
+    RPCError.raise_it(result, type(data))
+  File "/usr/local/lib/python3.11/dist-packages/pyrogram/errors/rpc_error.py", line 91, in raise_it
+    raise getattr(
+pyrogram.errors.exceptions.bad_request_400.MessageNotModified: Telegram says: [400 MESSAGE_NOT_MODIFIED] - The message was not modified because you tried to edit it using the same content. (caused by "messages.EditMessage")
+[11-Sep-25 17:57:56 - INFO] - ميــوزك زدثــون - Stopping Assistants...
+[11-Sep-25 17:57:56 - INFO] - ZelzalMusic - Stopping Bhagdad Music Bot...
+[11-Sep-25 19:23:35 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 19:23:35 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 19:23:35 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 19:23:35 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 19:23:35 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 19:23:35 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 19:23:36 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 19:23:37 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 19:23:37 - INFO] - ZelzalMusic.plugins - Successfully Imported Modules...
+[11-Sep-25 19:23:37 - INFO] - ميــوزك زدثــون - جارِ تشغيل الحساب المساعد . . .
+[11-Sep-25 19:23:37 - INFO] - ميــوزك زدثــون - تم بدء تشغيل الحساب المساعد . ...✓
+[11-Sep-25 19:23:37 - INFO] - ميــوزك زدثــون - جارِ تحميل مكاتب الميوزك . . .
+
+[11-Sep-25 19:23:39 - INFO] - ZelzalMusic - تم تنصيب سورس بغداد ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر
+[11-Sep-25 19:23:51 - INFO] - ميــوزك زدثــون - Stopping Assistants...
+[11-Sep-25 19:23:51 - INFO] - ZelzalMusic - Stopping Bhagdad Music Bot...
+[11-Sep-25 19:26:29 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 19:26:29 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 19:26:29 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 19:26:29 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 19:26:29 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 19:26:29 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 19:26:30 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 19:26:30 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 19:26:30 - INFO] - ZelzalMusic.plugins - Successfully Imported Modules...
+[11-Sep-25 19:26:30 - INFO] - ميــوزك زدثــون - جارِ تشغيل الحساب المساعد . . .
+[11-Sep-25 19:26:31 - INFO] - ميــوزك زدثــون - تم بدء تشغيل الحساب المساعد . ...✓
+[11-Sep-25 19:26:31 - INFO] - ميــوزك زدثــون - جارِ تحميل مكاتب الميوزك . . .
+
+[11-Sep-25 19:26:36 - INFO] - ZelzalMusic - تم تنصيب سورس بغداد ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر
+[11-Sep-25 19:51:25 - INFO] - ميــوزك زدثــون - Stopping Assistants...
+[11-Sep-25 19:51:25 - INFO] - ZelzalMusic - Stopping Bhagdad Music Bot...
+[11-Sep-25 19:51:32 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 19:51:32 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 19:51:32 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 19:51:32 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 19:51:32 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 19:51:32 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 19:51:33 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 19:51:33 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 19:51:33 - INFO] - ZelzalMusic.plugins - Successfully Imported Modules...
+[11-Sep-25 19:51:33 - INFO] - ميــوزك زدثــون - جارِ تشغيل الحساب المساعد . . .
+[11-Sep-25 19:51:33 - INFO] - ميــوزك زدثــون - تم بدء تشغيل الحساب المساعد . ...✓
+[11-Sep-25 19:51:33 - INFO] - ميــوزك زدثــون - جارِ تحميل مكاتب الميوزك . . .
+
+[11-Sep-25 19:51:34 - INFO] - ZelzalMusic - تم تنصيب سورس بغداد ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر
+[11-Sep-25 19:56:50 - INFO] - ميــوزك زدثــون - Stopping Assistants...
+[11-Sep-25 19:56:50 - INFO] - ZelzalMusic - Stopping Bhagdad Music Bot...
+[11-Sep-25 19:59:21 - INFO] - ميــوزك بـغــداد - جـارِ الاتصـال بقاعـدة البيانـات . . .
+[11-Sep-25 19:59:21 - INFO] - ميــوزك بـغــداد - تم الاتصـال بقاعـدة البيانـات ...✓
+[11-Sep-25 19:59:21 - INFO] - ميــوزك بـغــداد - تم تحـديث السـورس ...✓
+[11-Sep-25 19:59:21 - INFO] - ميــوزك زدثــون - Git Client Found [VPS DEPLOYER]
+[11-Sep-25 19:59:21 - INFO] - ZelzalMusic.misc - Local Database Initialized.
+[11-Sep-25 19:59:21 - INFO] - ميــوزك بحر - جارِ بدء تشغيل البوت . . .
+[11-Sep-25 19:59:22 - INFO] - ZelzalMusic.misc - Sudoers Loaded.
+[11-Sep-25 19:59:22 - INFO] - ميــوزك بحر -  تم بدء تشغيل البوت بـوت المرحلة الثانية  ...✓
+[11-Sep-25 19:59:22 - INFO] - ZelzalMusic.plugins - Successfully Imported Modules...
+[11-Sep-25 19:59:22 - INFO] - ميــوزك زدثــون - جارِ تشغيل الحساب المساعد . . .
+[11-Sep-25 19:59:23 - INFO] - ميــوزك زدثــون - تم بدء تشغيل الحساب المساعد . ...✓
+[11-Sep-25 19:59:23 - INFO] - ميــوزك زدثــون - جارِ تحميل مكاتب الميوزك . . .
+
+[11-Sep-25 19:59:24 - INFO] - ZelzalMusic - تم تنصيب سورس بغداد ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر
