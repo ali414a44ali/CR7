@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from pyrogram import filters
 load_dotenv()
 # Get this value from my.telegram.org/apps
-API_ID = int(getenv("API_ID", 8186557))
-API_HASH = getenv("API_HASH", "efd77b34c69c164ce158037ff5a0d117")
+API_ID = int(getenv("API_ID", 9671629))
+API_HASH = getenv("API_HASH", "be5c84e9dc1ca0e2b53d54b71e575124")
 # Get your token from @BotFather on Telegram.
 BOT_TOKEN = getenv("BOT_TOKEN","7665348559:AAH2UQebDxbU1C9GR1-QZaixfsglcHf1k5s")
 # Get your mongo url from cloud.mongodb.com
@@ -14,7 +14,7 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 2000))
 # Chat id of a group for logging bot's activities
 LOGGER_ID = int(getenv("LOGGER_ID","-1002718737593"))
 # Get this value from @FallenxBot on Telegram by /id
-OWNER_ID = int(getenv("OWNER_ID", "6848908141"))
+OWNER_ID = int(getenv("OWNER_ID", "7291869416"))
 ## Fill these variables if you're deploying on heroku.
 # Your heroku app name
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
@@ -22,15 +22,15 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/abbasghazal/music2",
+    "https://github.com/ali414a44ali/music",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  # Fill this variable if your upstream repository is private
 CH_US = getenv("CH_US", "shahmplus")
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/shahmplus")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/shahmplus")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BDB0B")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/BDB0B")
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
 # Get this credentials from https://developer.spotify.com/dashboard
