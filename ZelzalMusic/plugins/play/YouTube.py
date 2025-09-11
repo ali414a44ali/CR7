@@ -16,7 +16,7 @@ import re
 from typing import Union
 import yt_dlp
 from yt_dlp import YoutubeDL
-from VeGa.plugins.play.ADMANS import *
+from ZelzalMusic.plugins.play.ADMANS import *
 from pyrogram.enums import MessageEntityType
 from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
