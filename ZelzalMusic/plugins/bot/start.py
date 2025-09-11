@@ -76,7 +76,8 @@ async def start_pm(client, message: Message, _):
             )
 
 
-@app.on_message(filters.command(["starrt"]) & filters.group & ~BANNED_USERS)
+@app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
+@LanguageStart
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
