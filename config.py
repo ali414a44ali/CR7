@@ -8,13 +8,14 @@ API_ID = int(getenv("API_ID", 9671629))
 API_HASH = getenv("API_HASH", "be5c84e9dc1ca0e2b53d54b71e575124")
 # Get your token from @BotFather on Telegram.
 BOT_TOKEN = getenv("BOT_TOKEN","7665348559:AAH2UQebDxbU1C9GR1-QZaixfsglcHf1k5s")
+BOT_NAME= getenv("BOT_NAME","ماتركس") 
 # Get your mongo url from cloud.mongodb.com
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://Anubarlo:Anubarlo@cluster0.ioiefbq.mongodb.net/?retryWrites=true&w=majority")
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 2000))
 # Chat id of a group for logging bot's activities
 LOGGER_ID = int(getenv("LOGGER_ID","-1002718737593"))
 # Get this value from @FallenxBot on Telegram by /id
-OWNER_ID = int(getenv("OWNER_ID", "7291869416"))
+OWNER_ID = int(getenv("OWNER_ID", "6848908141"))
 ## Fill these variables if you're deploying on heroku.
 # Your heroku app name
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
@@ -29,8 +30,8 @@ GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  # Fill this variable if your upstream repository is private
 CH_US = getenv("CH_US", "shahmplus")
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BDB0B")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/BDB0B")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/Shahmplus")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/Shahmplus")
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
 # Get this credentials from https://developer.spotify.com/dashboard
