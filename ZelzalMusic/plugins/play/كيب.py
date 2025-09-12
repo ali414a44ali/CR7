@@ -32,23 +32,29 @@ from ZelzalMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, a
 from ZelzalMusic import app
 from random import  choice, randint
 #بلاك
-lnk= "" +config.SUPPORT_CHANNEL
-          
-@app.on_message(command(["غنيلي","• غنيلي •"]) & filters.private)
+lnk = config.SUPPORT_CHANNEL
+
+@app.on_message(command(["غنيلي", "• غنيلي •"]) & filters.private)
 async def aTari(client: Client, message: Message):
-    rl = random.randint(2,2301)
+    # يجيب رقم عشوائي من 2 إلى 2301
+    rl = random.randint(2, 2301)
     url = f"https://t.me/AudiosWaTaN/{rl}"
-    await message.reply_voice(url,caption="≭︰تم اختيار اغنية لك .",
-    reply_markup=InlineKeyboardMarkup(
+    
+    await message.reply_voice(
+        url,
+        caption="≭︰تم اختيار اغنية لك 🎶",
+        reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CHANNEL_NAME, url=lnk)
-                ],
+                        text=config.CHANNEL_NAME,
+                        url=lnk
+                    )
+                ]
             ]
         )
-                             )
-#حقو.ق س.ورس اك.سي
+    )
+
 @app.on_message(command(["فويز","• فويز •"]) & filters.private)
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,580)
