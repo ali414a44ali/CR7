@@ -33,10 +33,25 @@ from ZelzalMusic import app
 from random import  choice, randint
 #بلاك
 lnk = config.SUPPORT_CHANNEL
+force_channel = "shahmplus"
 
 @app.on_message(command(["غنيلي", "• غنيلي •"]) & filters.private)
 async def aTari(client: Client, message: Message):
-    # يجيب رقم عشوائي من 2 إلى 2301
+    user_id = message.from_user.id
+
+    try:
+        member = await app.get_chat_member(force_channel, user_id)
+        if member.status in ["left", "kicked"]:
+            raise Exception("مو مشترك")
+    except Exception:
+        return await message.reply_text(
+            "⇜ عليك الاشتـراك في قنـاة البـوت لـ استخـدام الاوامـر",
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton(f" {force_channel}", url=f"https://t.me/{force_channel}")]]
+            ),
+        )
+
+    # إذا مشترك يجيب رقم عشوائي من 2 إلى 2301
     rl = random.randint(2, 2301)
     url = f"https://t.me/AudiosWaTaN/{rl}"
     
@@ -44,17 +59,9 @@ async def aTari(client: Client, message: Message):
         url,
         caption="≭︰تم اختيار اغنية لك 🎶",
         reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        text=config.CHANNEL_NAME,
-                        url=lnk
-                    )
-                ]
-            ]
+            [[InlineKeyboardButton(text=config.CHANNEL_NAME, url=lnk)]]
         )
     )
-
 @app.on_message(command(["فويز","• فويز •"]) & filters.private)
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,580)
