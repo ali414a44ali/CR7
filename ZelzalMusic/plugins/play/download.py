@@ -4,17 +4,10 @@
 
 import os
 import requests
-
-import aiohttp
-import aiofiles
-
 import yt_dlp
-from yt_dlp import YoutubeDL
-from pyrogram import Client, filters
-from pyrogram.errors import FloodWait
-from pyrogram.types import Message, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram import Client
+from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from youtube_search import YoutubeSearch
-
 from ZelzalMusic import app
 from ZelzalMusic.plugins.play.filters import command
 from config import CH_US
@@ -48,7 +41,7 @@ def load_cookies():
     
     return cookies
 
-@app.on_message(command(["/song", "بحث", "/music", "يوت"]))
+@app.on_message(command(["/song", "بحث", "/music", "يوت", "نزل"]))
 async def song_downloader(client, message: Message):
     # تحميل الكوكيز قبل أي عملية
     cookies = load_cookies()
@@ -63,23 +56,17 @@ async def song_downloader(client, message: Message):
         'prefer_ffmpeg': False,
         'geo_bypass': True,
         'outtmpl': '%(title)s.%(ext)s',
-        'quite': True,
+        'quiet': True,
         'cookies': cookies,  # إضافة الكوكيز
     }
     
     try:
-        # إضافة الكوكيز لطلبات البحث أيضًا
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Cookie': '; '.join([f'{k}={v}' for k, v in cookies.items()])
-        }
-        
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
         title = results[0]["title"][:40]
         thumbnail = results[0]["thumbnails"][0]
         thumb_name = f"{title}.jpg"
-        thumb = requests.get(thumbnail, allow_redirects=True, headers=headers)
+        thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
         duration = results[0]["duration"]
 
@@ -95,7 +82,12 @@ async def song_downloader(client, message: Message):
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
         rep = f"𖡃 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ @{app.username} "
-        button = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text=app.name, url=f"t.me/{CH_US}")]])
+        button = InlineKeyboardMarkup(
+            inline_keyboard=[
+                [InlineKeyboardButton(text=app.name, url=f"t.me/{CH_US}")]
+                
+            ]
+        )
         host = str(info_dict["uploader"])
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
