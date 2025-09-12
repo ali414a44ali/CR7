@@ -152,8 +152,12 @@ async def download_audio_with_progress(link, title, message, m):
     except Exception as e:
         return None, f"⚠️ خطأ أثناء التحميل: {str(e)}"
 
+last_update_time = 0  
+last_update_percent = 0  
+
 def progress_hook(d, message, m):
-    """عرض تقدم التحميل"""
+    """عرض تقدم التحميل مع Rate Limit محسّن"""
+    global last_update_time, last_update_percent
     if d['status'] == 'downloading':
         try:
             total_size = d.get('total_bytes') or d.get('total_bytes_estimate')
@@ -163,7 +167,7 @@ def progress_hook(d, message, m):
                 percentage = (downloaded / total_size) * 100
                 speed = d.get('speed', 0)
                 eta = d.get('eta', 0)
-                
+
                 progress_msg = (
                     f"<b>⇜ جاري التحميل ♪</b>\n\n"
                     f"▰ <b>التقدم:</b> {percentage:.1f}%\n"
@@ -172,10 +176,16 @@ def progress_hook(d, message, m):
                     f"▰ <b>السرعة:</b> {format_size(speed)}/s\n"
                     f"▰ <b>الوقت المتبقي:</b> {eta} ثانية"
                 )
-                
-                # تحديث الرسالة كل 5 ثواني لتجنب التحميل الزائد
-                asyncio.create_task(update_progress_message(m, progress_msg))
-                
+
+                import time
+                now = time.time()
+
+                # حدث إذا مرّ 10 ثواني أو زاد التقدم 5% 
+                if (now - last_update_time >= 10) or (percentage - last_update_percent >= 5):
+                    last_update_time = now
+                    last_update_percent = percentage
+                    asyncio.create_task(update_progress_message(m, progress_msg))
+
         except Exception as e:
             print(f"Progress hook error: {e}")
 
