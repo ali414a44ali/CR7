@@ -46,11 +46,13 @@ def cookie_txt_file():
 async def check_file_size(link):
     async def get_format_info(link):
         try:
+            cookies_file = cookie_txt_file() or ""
+            cmd = ["yt-dlp", "-J", link]
+            if cookies_file:
+                cmd.extend(["--cookies", cookies_file])
+                
             proc = await asyncio.create_subprocess_exec(
-                "yt-dlp",
-                "--cookies", cookie_txt_file() or "",
-                "-J",
-                link,
+                *cmd,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE
             )
@@ -66,8 +68,10 @@ async def check_file_size(link):
     def parse_size(formats):
         total_size = 0
         for format in formats:
-            if 'filesize' in format:
+            if 'filesize' in format and format['filesize'] is not None:
                 total_size += format['filesize']
+            elif 'filesize_approx' in format and format['filesize_approx'] is not None:
+                total_size += format['filesize_approx']
         return total_size
 
     info = await get_format_info(link)
@@ -91,13 +95,37 @@ async def shell_cmd(cmd):
         )
         out, errorz = await proc.communicate()
         if errorz:
-            if "unavailable videos are hidden" in (errorz.decode("utf-8")).lower():
+            error_msg = errorz.decode("utf-8")
+            if "unavailable videos are hidden" in error_msg.lower():
                 return out.decode("utf-8")
             else:
-                return errorz.decode("utf-8")
+                return error_msg
         return out.decode("utf-8")
     except Exception as e:
         return f"Command error: {str(e)}"
+
+async def download_audio(link, title):
+    try:
+        cookies_file = cookie_txt_file() or ""
+        cmd = f'yt-dlp -x --audio-format mp3 -o "{title}.%(ext)s" "{link}"'
+        if cookies_file:
+            cmd = f'yt-dlp --cookies "{cookies_file}" -x --audio-format mp3 -o "{title}.%(ext)s" "{link}"'
+        
+        print(f"Download command: {cmd}")
+        result = await shell_cmd(cmd)
+        print(f"Download result: {result}")
+        
+        if "error" in result.lower():
+            return None, result
+        
+        audio_file = f"{title}.mp3"
+        if os.path.exists(audio_file):
+            return audio_file, None
+        else:
+            return None, "File was not created"
+            
+    except Exception as e:
+        return None, str(e)
 
 @app.on_message(command(["يوت", "نزل", "بحث"]))
 async def song_downloader(client, message: Message):
@@ -109,13 +137,6 @@ async def song_downloader(client, message: Message):
     m = await message.reply_text("<b>⇜ جـارِ البحث ..</b>")
     
     print(f"Searching for: {query}")
-
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "outtmpl": "%(title)s.%(ext)s",
-        "quiet": True,
-        "cookiefile": cookie_txt_file() or "",
-    }
 
     try:
         # البحث باستخدام المكتبة الحديثة
@@ -139,16 +160,18 @@ async def song_downloader(client, message: Message):
         print(f"Found video: {title}")
         print(f"Video link: {link}")
 
-        # التحقق من حجم الملف
+        # التحقق من حجم الملف (اختياري)
         file_size = await check_file_size(link)
         if file_size and file_size > 200000000:
             await m.edit("⚠️ حجم الملف كبير جداً (أكثر من 200MB)")
             return
 
         # تحميل الصورة المصغرة
+        thumb_name = None
         try:
             thumb_response = requests.get(thumbnail, timeout=10)
             thumb_response.raise_for_status()
+            thumb_name = f"{title}.jpg"
             with open(thumb_name, "wb") as f:
                 f.write(thumb_response.content)
         except Exception as thumb_error:
@@ -162,35 +185,21 @@ async def song_downloader(client, message: Message):
 
     await m.edit("<b>⇜ جاري التحميل ♪</b>")
 
-    try:
-        # تحميل الملف الصوتي
-        download_cmd = f'yt-dlp --cookies "{cookie_txt_file() or ""}" -x --audio-format mp3 -o "{title}.%(ext)s" "{link}"'
-        print(f"Download command: {download_cmd}")
-        
-        result = await shell_cmd(download_cmd)
-        print(f"Download result: {result}")
-        
-        if "error" in result.lower():
-            await m.edit(f"⚠️ خطأ أثناء التحميل:\n<code>{result[:1000]}</code>")
-            return
-            
-        audio_file = f"{title}.mp3"
-        
-        if not os.path.exists(audio_file):
-            await m.edit("⚠️ فشل في تحميل الملف الصوتي")
-            return
-
-    except Exception as e:
-        await m.edit(f"⚠️ خطأ أثناء التحميل:\n<code>{str(e)}</code>")
-        print("yt_dlp error:", e)
+    # تحميل الملف الصوتي
+    audio_file, error = await download_audio(link, title)
+    if error:
+        await m.edit(f"⚠️ خطأ أثناء التحميل:\n<code>{error[:1000]}</code>")
         return
 
     # حساب المدة
     try:
-        secmul, dur, dur_arr = 1, 0, duration.split(":")
-        for i in range(len(dur_arr) - 1, -1, -1):
-            dur += int(float(dur_arr[i])) * secmul
-            secmul *= 60
+        dur = 0
+        if duration and ":" in duration:
+            dur_arr = duration.split(":")
+            secmul = 1
+            for i in range(len(dur_arr) - 1, -1, -1):
+                dur += int(float(dur_arr[i])) * secmul
+                secmul *= 60
     except:
         dur = 0
 
@@ -215,7 +224,8 @@ async def song_downloader(client, message: Message):
     # التنظيف
     finally: 
         try:
-            remove_if_exists(audio_file)
+            if audio_file and os.path.exists(audio_file):
+                remove_if_exists(audio_file)
             if thumb_name and os.path.exists(thumb_name):
                 remove_if_exists(thumb_name)
         except Exception as e:
