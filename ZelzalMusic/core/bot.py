@@ -21,8 +21,8 @@ class Zelzaly(Client):
         try:
             await self.send_photo(
                 chat_id=config.LOGGER_ID,
-                photo="https://forkgraph.zaid.pro/file/CyY9CNwrPaNW",
-                caption=f"<b> {self.mention}\n تم تشغيل البـوت :\n على سورس بحر :\nɴᴀᴍᴇ : {self.name}\nᴜꜱᴇʀ ɴᴀᴍᴇ : @{self.username}\nɪᴅ : {self.id}</b>",
+                photo="https://envs.sh/BJp.jpg",
+                caption=f"<b> {self.mention}\n تم تشغيل البـوت :\n على سورس ماتركس:\nɴᴀᴍᴇ : {self.name}\nᴜꜱᴇʀ ɴᴀᴍᴇ : @{self.username}\nɪᴅ : {self.id}</b>",
             )
         except (errors.ChannelInvalid, errors.PeerIdInvalid):
             LOGGER(__name__).error(
