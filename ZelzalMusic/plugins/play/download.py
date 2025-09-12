@@ -3,7 +3,7 @@ import requests
 import config
 import aiohttp
 import aiofiles
-from YousefMusic.platforms.Youtube import cookie_txt_file
+from ZelzalMusic.platforms.Youtube import cookie_txt_file
 
 import yt_dlp
 from yt_dlp import YoutubeDL
@@ -18,7 +18,7 @@ from ZelzalMusic.plugins.play.filters import command
 def remove_if_exists(path):
     if os.path.exists(path):
         os.remove(path)
-channel = config.CHANNEL_SUDO              
+channel = config.CH_US             
 lnk = config.CHANNEL_LINK
 Nem = config.BOT_NAME + " ابحث"
 @app.on_message(command(["يوت", "نزل", "بحث", Nem]))
@@ -76,7 +76,7 @@ async def song_downloader(client, message: Message):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text="كِتابات خَارج السرب", url=f"https://t.me/cecrr"),
+                        InlineKeyboardButton(text="• 𝐒𝐨𝐮𝐫𝐜𝐞 •", url=f"https://t.me/shahmplus"),
                     ],
                 ]
             ),
