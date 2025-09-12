@@ -48,9 +48,13 @@ async def song_downloader(client, message: Message):
     await m.edit("<b>جاري التحميل ♪</b>")
 
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(link, download=True)
-            audio_file = ydl.prepare_filename(info_dict)
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info_dict = ydl.extract_info(link, download=True)
+        audio_file = ydl.prepare_filename(info_dict)
+
+except Exception as e:
+    await m.edit("error, wait for bot owner to fix")
+    print(e)
 
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
