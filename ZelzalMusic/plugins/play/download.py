@@ -4,11 +4,9 @@ import requests
 import yt_dlp
 from yt_dlp import YoutubeDL
 from youtube_search import YoutubeSearch
-from ZelzalMusic import app
-from ZelzalMusic.platforms.Youtube import cookie_txt_file
+from ZelzalMusic import app, config
 from ZelzalMusic.plugins.play.filters import command
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-import config 
 from config import CH_US
 
 def remove_if_exists(path):
@@ -21,11 +19,12 @@ async def song_downloader(client, message: Message):
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ البحث ..</b>")
 
+    # تعديل ydl_opts مع مسار الكوكيز الجديد
     ydl_opts = {
-        "format": "bestaudio/best",  # بديل عن m4a لتجنب مشاكل الصيغة
+        "format": "bestaudio/best",  
         "outtmpl": "%(title)s.%(ext)s",
         "quiet": True,
-        # "cookiefile": cookie_txt_file(),  # فعل إذا عندك ملف كوكيز صالح
+        "cookiefile": "/root/CR7/ZelzalMusic/cookies.txt",  # مسار الكوكيز الجديد
     }
 
     # البحث عن الفيديو
