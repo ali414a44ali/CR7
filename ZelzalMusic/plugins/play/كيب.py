@@ -31,25 +31,51 @@ from ZelzalMusic.utils.decorators import AdminActual
 from ZelzalMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
 from ZelzalMusic import app
 from random import  choice, randint
-#بلاك
+
 lnk = config.SUPPORT_CHANNEL
-force_channel = "shahmplus"
+BiLaL = "shahmplus"
 
 @app.on_message(command(["غنيلي", "• غنيلي •"]) & filters.private)
 async def aTari(client: Client, message: Message):
     user_id = message.from_user.id
 
     try:
+        # نتأكد اذا هو عضو بالقناة
         member = await app.get_chat_member(force_channel, user_id)
         if member.status in ["left", "kicked"]:
             raise Exception("مو مشترك")
     except Exception:
+        try:
+            # نجيب معلومات القناة (اسمها الحقيقي)
+            chat = await client.get_chat(force_channel)
+            channel_name = chat.title
+        except Exception:
+            # احتياط اذا ما قدر يجيب الاسم، نخلي اليوزر
+            channel_name = force_channel  
+
         return await message.reply_text(
             "⇜ عليك الاشتـراك في قنـاة البـوت لـ استخـدام الاوامـر",
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(f" {force_channel}", url=f"https://t.me/{force_channel}")]]
+                [[InlineKeyboardButton(f" {channel_name}", url=f"https://t.me/{BiLaL}")]]
             ),
         )
+
+    
+    import random
+    rl = random.randint(2, 2301)
+    url = f"https://t.me/AudiosWaTaN/{rl}"
+    
+    await message.reply_voice(
+        url,
+        caption="≭︰تم اختيار اغنية لك 🎶",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("قناة البوت 📢", url=f"https://t.me/{force_channel}")
+                ]
+            ]
+        )
+    )
 
     # إذا مشترك يجيب رقم عشوائي من 2 إلى 2301
     rl = random.randint(2, 2301)
