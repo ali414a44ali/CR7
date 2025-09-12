@@ -14,7 +14,7 @@ from ZelzalMusic import app
 from config import OWNER_ID, LOGGER_ID
 
 
-@app.on_message(command(["ميوزك", "الميوزك", "الاغاني"]))
+@app.on_message(command(["الاوامر","ميوزك"]))
 async def zdatsr(client: Client, message: Message):
     if len(message.command) > 1:
         return
@@ -39,6 +39,8 @@ async def zdatsr(client: Client, message: Message):
                         "• اوامــر المطــور •", callback_data="zzzdv"),
                 ],[
                     InlineKeyboardButton(name, url=f"https://t.me/{usrnam}"),
+                ],[
+                    InlineKeyboardButton("• 𝐒𝐨𝐮𝐫𝐜𝐞 •, url=f"https://t.me/shahmplus"),
                 ],
             ]
         ),
