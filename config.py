@@ -8,7 +8,8 @@ API_ID = int(getenv("API_ID", 9671629))
 API_HASH = getenv("API_HASH", "be5c84e9dc1ca0e2b53d54b71e575124")
 # Get your token from @BotFather on Telegram.
 BOT_TOKEN = getenv("BOT_TOKEN","7665348559:AAEkLMPwlJyA-A_xMTf8n9afXn589MlFSj4")
-BOT_NAME= getenv("BOT_NAME","بوت") 
+BOT_NAME= getenv("BOT_NAME","بوت")
+MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "MaTrIx Music")
 # Get your mongo url from cloud.mongodb.com
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://Anubarlo:Anubarlo@cluster0.ioiefbq.mongodb.net/?retryWrites=true&w=majority")
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 2000))
@@ -62,6 +63,11 @@ START_IMG_URL = getenv(
 PING_IMG_URL = getenv(
     "PING_IMG_URL", "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
 )
+if not MUSIC_BOT_NAME.isascii():
+    print(
+        "[ERROR] - You've defined MUSIC_BOT_NAME wrong. Please don't use any special characters or Special font for this... Keep it simple and small."
+    )
+    sys.exit()
 PLAYLIST_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
 STATS_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
 TELEGRAM_AUDIO_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
