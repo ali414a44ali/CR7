@@ -53,7 +53,7 @@ async def init():
     except:
         pass
     await Zelzaly.decorators()
-    LOGGER("ZelzalMusic").info("تم تنصيب سورس بغداد ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر")
+    LOGGER("ZelzalMusic").info("تم تنصيب سورس ماتركـس  ينجاح اذهب الى بوتك واستمتع باستخدام الاوامر")
     await idle()
     await app.stop()
     await userbot.stop()
