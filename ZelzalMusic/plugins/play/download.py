@@ -4,10 +4,8 @@
 
 import os
 import requests
-
 import aiohttp
 import aiofiles
-
 import yt_dlp
 from yt_dlp import YoutubeDL
 from pyrogram import Client, filters
@@ -28,6 +26,10 @@ def remove_if_exists(path):
 async def song_downloader(client, message: Message):
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ البحث عـن المقطـع الصـوتـي . . .</b>")
+    
+    # تحديد مسار ملف cookies
+    cookies_path = os.path.join("cookies", "cookies.txt")
+    
     ydl_ops = {
         'format': 'bestaudio[ext=m4a]',
         'keepvideo': True,
@@ -35,7 +37,10 @@ async def song_downloader(client, message: Message):
         'geo_bypass': True,
         'outtmpl': '%(title)s.%(ext)s',
         'quite': True,
+        # إضافة ملف cookies إذا كان موجودًا
+        'cookiefile': cookies_path if os.path.exists(cookies_path) else None,
     }
+    
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
@@ -50,6 +55,7 @@ async def song_downloader(client, message: Message):
         await m.edit("- لم يتم العثـور على نتائج ؟!\n- حـاول مجـدداً . . .")
         print(str(e))
         return
+        
     await m.edit("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
     try:
         with yt_dlp.YoutubeDL(ydl_ops) as ydl:
