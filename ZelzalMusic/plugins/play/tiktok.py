@@ -1,14 +1,9 @@
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ ʑᴇʟᴢᴀʟ_ᴍᴜsɪᴄ ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯  T.me/ZThon   ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ T.me/Zelzal_Music ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 import os
 import requests
 import urllib.request
 from bs4 import BeautifulSoup
 from pyrogram import Client, filters
-from pyrogram.types import Message, CallbackQuery
-from pyrogram.types import InlineKeyboardMarkup as Markup, InlineKeyboardButton as Button
-
+from pyrogram.types import Message
 from ZelzalMusic import app
 from ZelzalMusic.plugins.play.filters import command
 
@@ -18,29 +13,53 @@ headers = {
                   'Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10'
 }
 
-def download_video(url):
+# دالة تحل الرابط إذا كان قصير
+def resolve_tiktok_url(url: str) -> str:
+    try:
+        response = requests.head(url, allow_redirects=True, headers=headers, timeout=10)
+        return response.url
+    except:
+        return url
+
+def download_video(url: str):
+    # حل الرابط إذا قصير
+    url = resolve_tiktok_url(url)
+
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
-    link = soup.find('link', {'rel': 'canonical'}).attrs['href']
-    video_id = link.split('/')[-1:][0]
+
+    link_tag = soup.find('link', {'rel': 'canonical'})
+    if not link_tag:
+        return False  # إذا ما موجود canonical link
+
+    link = link_tag.get('href')
+    if not link:
+        return False
+
+    video_id = link.split('/')[-1]
     request_url = f'https://api.tiktokv.com/aweme/v1/feed/?aweme_id={video_id}'
+
     response = requests.get(request_url, headers=headers)
     try:
-        video_link = response.json()['aweme_list'][0]['video']['play_addr']['url_list'][2]
+        video_link = response.json()['aweme_list'][0]['video']['play_addr']['url_list'][0]
         urllib.request.urlretrieve(video_link, 'out.mp4')
         return 'out.mp4'
-    except IndexError:
+    except Exception as e:
+        print("Download error:", e)
         return False
 
 
-@app.on_message(command(["/tt", "تيك", "/tiktok"]))
+@app.on_message(command(["tt", "تيك", "tiktok"]))
 async def reciveURL(client, message: Message):
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
     if query and ("tiktok.com" in query):
-        if download_video(query):
+        file_path = download_video(query)
+        if file_path:
             await message.reply_video(
-                video='out.mp4',
+                video=file_path,
                 caption=f"𖡃 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ @{app.username} ",
             )
-            await m.delete()
+        else:
+            await message.reply_text("⚠️ ما كدرت أجيب الفيديو، جرّب رابط ثاني 🌹")
+        await m.delete()
