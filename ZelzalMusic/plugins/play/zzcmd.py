@@ -30,6 +30,8 @@ async def zzzback(_, query: CallbackQuery):
                 ],[
                     InlineKeyboardButton(
                         "• اوامــر المطــور •", callback_data="zzzdv"),
+                ],[
+                    InlineKeyboardButton("• 𝐒𝐨𝐮𝐫𝐜𝐞 •", url=f"https://t.me/shahmplus"),
                 ],
             ]
         ),
