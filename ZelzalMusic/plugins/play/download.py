@@ -109,7 +109,7 @@ async def song_downloader(client, message: Message):
         thumb_name = f"{title}.jpg"
 
         file_size = await check_file_size(link)
-        if file_size and file_size > 2000000000000:  
+        if file_size and file_size > 200000000:  
             await m.edit("⚠️ حجم الملف كبير جداً (أكثر من 200MB)")
             return
 
