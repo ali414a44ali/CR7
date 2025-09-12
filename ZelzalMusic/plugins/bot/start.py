@@ -1,127 +1,81 @@
-import asyncio
-
-from pyrogram import filters
-from pyrogram.types import (InlineKeyboardButton,
-                            InlineKeyboardMarkup, Message)
+import time
+from pyrogram import filters, enums
+from pyrogram.enums import ChatType
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, CallbackQuery
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
-from config import BANNED_USERS
-from config import OWNER_ID
-from ZelzalMusic import Telegram, YouTube, app
-from ZelzalMusic.misc import SUDOERS
-from ZelzalMusic.plugins.play.playlist import del_plist_msg
+from ZelzalMusic import app
+from ZelzalMusic.misc import _boot_
 from ZelzalMusic.plugins.sudo.sudoers import sudoers_list
-from ZelzalMusic.utils.database import (add_served_chat,
-                                       add_served_user,
-                                       blacklisted_chats,
-                                       get_assistant, get_lang,
-                                       get_userss, is_on_off,
-                                       is_served_private_chat)
-from ZelzalMusic.utils.decorators.language import LanguageStart
-from ZelzalMusic.utils.inline import (help_pannel, private_panel,
-                                     start_pannel)
-
-loop = asyncio.get_running_loop()
-
-
-@app.on_message(
-    filters.command(["start"])  # استخدام الأمر مباشرة بدلاً من get_command
-    & filters.private
-    & ~filters.edited
-    & ~BANNED_USERS
+from ZelzalMusic.utils.database import (
+    add_served_chat,
+    add_served_user,
+    blacklisted_chats,
+    get_lang,
+    is_banned_user,
+    is_on_off,
 )
+from ZelzalMusic.utils.decorators.language import LanguageStart
+from ZelzalMusic.utils.formatters import get_readable_time
+from ZelzalMusic.utils.inline import help_pannel, private_panel, start_panel
+from config import BANNED_USERS
+from strings import get_string
+
+# دالة للتحقق من اشتراك المستخدم في القناة
+async def is_subscribed(user_id):
+    try:
+        member = await app.get_chat_member("Shahmplus", user_id)
+        if member.status in [enums.ChatMemberStatus.OWNER, enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.MEMBER]:
+            return True
+        return False
+    except Exception as e:
+        print(f"Error checking subscription: {e}")
+        return False
+
+# معالج لفحص الاشتراك عند استخدام الأمر start
+@app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
-async def start_comm(client, message: Message, _):
+async def start_pm(client, message: Message, _):
+    # التحقق من اشتراك المستخدم في القناة
+    user_id = message.from_user.id
+    if not await is_subscribed(user_id):
+        # إذا لم يكن مشتركًا، نطلب منه الاشتراك
+        channel_name = "Shahmplus"
+        await message.reply_text(
+            f"**مرحبًا {message.from_user.mention} 👋**\n\n"
+            "**عذرًا، يجب عليك الاشتراك في قناتنا أولاً لاستخدام البوت.**\n\n"
+            "**➥ قناة البوت: @Shahmplus**\n\n"
+            "**بعد الاشتراك، اضغط على زر 'تفحص الاشتراك' أدناه.**",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("قناة البوت ⚡", url=f"https://t.me/{channel_name}")],
+                [InlineKeyboardButton("تفحص الاشتراك ♻️", callback_data="check_subscription")]
+            ]),
+            disable_web_page_preview=True
+        )
+        return
+    
+    # إذا كان مشتركًا، نتابع العملية الطبيعية
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            return await message.reply_text(
-                _["help_1"], reply_markup=keyboard
+            return await message.reply_photo(
+                photo=config.START_IMG_URL,
+                caption=_["help_1"].format(config.YAFA_CHANNEL),
+                reply_markup=keyboard,
             )
-        if name[0:4] == "song":
-            return await message.reply_text(_["song_2"])
-        if name[0:3] == "sta":
-            m = await message.reply_text(
-                "🔎 جلب الإحصائيات الشخصية..."
-            )
-            stats = await get_userss(message.from_user.id)
-            tot = len(stats)
-            if not stats:
-                await asyncio.sleep(1)
-                return await m.edit(_["ustats_1"])
-
-            def get_stats():
-                msg = ""
-                limit = 0
-                results = {}
-                for i in stats:
-                    top_list = stats[i]["spot"]
-                    results[str(i)] = top_list
-                    list_arranged = dict(
-                        sorted(
-                            results.items(),
-                            key=lambda item: item[1],
-                            reverse=True,
-                        )
-                    )
-                if not results:
-                    return m.edit(_["ustats_1"])
-                tota = 0
-                videoid = None
-                for vidid, count in list_arranged.items():
-                    tota += count
-                    if limit == 10:
-                        continue
-                    if limit == 0:
-                        videoid = vidid
-                    limit += 1
-                    details = stats.get(vidid)
-                    title = (details["title"][:35]).title()
-                    if vidid == "telegram":
-                        msg += f"🔗[ملفات وتدوينات تيليجرام](https://t.me/telegram) ** تم تشغيلها {count} مرات**\n\n"
-                    else:
-                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid}) ** تم تشغيلها {count} مرات**\n\n"
-                msg = _["ustats_2"].format(tot, tota, limit) + msg
-                return videoid, msg
-
-            try:
-                videoid, msg = await loop.run_in_executor(
-                    None, get_stats
-                )
-            except Exception as e:
-                print(e)
-                return
-            thumbnail = await YouTube.thumbnail(videoid, True)
-            await m.delete()
-            await message.reply_photo(photo=thumbnail, caption=msg)
-            return
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
-            if await is_on_off(config.LOG):
-                sender_id = message.from_user.id
-                sender_name = message.from_user.first_name
+            if await is_on_off(2):
                 return await app.send_message(
-                    config.LOGGER_ID,
-                    f"{message.from_user.mention} قام بتشغيل البوت للتحقق من <code>قائمة المطورين</code>\n\n**ايدي المستخدم:** {sender_id}\n**اسم المستخدم:** {sender_name}",
+                    chat_id=config.LOGGER_ID,
+                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
             return
-        if name[0:3] == "lyr":
-            query = (str(name)).replace("lyrics_", "", 1)
-            lyrical = config.lyrical
-            lyrics = lyrical.get(query)
-            if lyrics:
-                return await Telegram.send_split_text(message, lyrics)
-            else:
-                return await message.reply_text(
-                    "فشل في جلب كلمات الأغنية."
-                )
-        if name[0:3] == "del":
-            await del_plist_msg(client=client, message=message, _=_)
         if name[0:3] == "inf":
-            m = await message.reply_text("🔎 جلب المعلومات...")
+            m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
@@ -129,157 +83,114 @@ async def start_comm(client, message: Message, _):
                 title = result["title"]
                 duration = result["duration"]
                 views = result["viewCount"]["short"]
-                thumbnail = result["thumbnails"][0]["url"].split("?")[
-                    0
-                ]
+                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
                 channellink = result["channel"]["link"]
                 channel = result["channel"]["name"]
                 link = result["link"]
                 published = result["publishedTime"]
-            searched_text = f"""
-🔍__**معلومات المقطع الصوتي**__
-
-❇️**العنوان:** {title}
-
-⏳**المدة:** {duration} دقائق
-👀**المشاهدات:** `{views}`
-⏰**وقت النشر:** {published}
-🎥**اسم القناة:** {channel}
-📎**رابط القناة:** [زيارة من هنا]({channellink})
-🔗**رابط المقطع:** [رابط]({link})
-
-⚡️ __بحث بواسطة {config.MUSIC_BOT_NAME}__"""
+            searched_text = _["start_6"].format(
+                title, duration, views, published, channellink, channel, app.mention
+            )
             key = InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(
-                            text="🎥 مشاهدة", url=f"{link}"
-                        ),
-                        InlineKeyboardButton(
-                            text="🔄 إغلاق", callback_data="close"
-                        ),
+                        InlineKeyboardButton(text=_["S_B_8"], url=link),
                     ],
                 ]
             )
             await m.delete()
             await app.send_photo(
-                message.chat.id,
+                chat_id=message.chat.id,
                 photo=thumbnail,
                 caption=searched_text,
-                parse_mode="markdown",
                 reply_markup=key,
             )
-            if await is_on_off(config.LOG):
-                sender_id = message.from_user.id
-                sender_name = message.from_user.first_name
+            if await is_on_off(2):
                 return await app.send_message(
-                    config.LOGGER_ID,
-                    f"{message.from_user.mention} قام بتشغيل البوت للتحقق من <code>معلومات الفيديو</code>\n\n**ايدي المستخدم:** {sender_id}\n**اسم المستخدم:** {sender_name}",
+                    chat_id=config.LOGGER_ID,
+                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
-        try:
-            await app.resolve_peer(OWNER_ID[0])
-            OWNER = OWNER_ID[0]
-        except:
-            OWNER = None
-        out = private_panel(_, app.username, OWNER)
-        if config.START_IMG_URL:
-            try:
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
-                    caption=_["start_2"].format(
-                        config.MUSIC_BOT_NAME
-                    ),
-                    reply_markup=InlineKeyboardMarkup(out),
-                )
-            except:
-                await message.reply_text(
-                    _["start_2"].format(config.MUSIC_BOT_NAME),
-                    reply_markup=InlineKeyboardMarkup(out),
-                )
+        await message.reply("<b>اهلا بك عزيز المستخدم ⚡ ،</b>")
+        if client.me.photo:
+            async for photo in app.get_chat_photos("me",limit=1):
+                start_img = photo.file_id
         else:
-            await message.reply_text(
-                _["start_2"].format(config.MUSIC_BOT_NAME),
-                reply_markup=InlineKeyboardMarkup(out),
-            )
-        if await is_on_off(config.LOG):
-            sender_id = message.from_user.id
-            sender_name = message.from_user.first_name
+            start_img = config.START_IMG_URL
+        out = private_panel(_)
+        await message.reply_photo(
+            photo=start_img,
+            caption=_["start_2"].format(message.from_user.mention, app.mention),
+            reply_markup=InlineKeyboardMarkup(out),
+        )
+        if await is_on_off(2):
             return await app.send_message(
-                config.LOGGER_ID,
-                f"{message.from_user.mention} قام بتشغيل البوت.\n\n**ايدي المستخدم:** {sender_id}\n**اسم المستخدم:** {sender_name}",
+                chat_id=config.LOGGER_ID,
+                text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
             )
 
+# معالج للتحقق من الاشتراك عند النقر على الزر
+@app.on_callback_query(filters.regex("check_subscription"))
+async def check_subscription(client, callback_query: CallbackQuery):
+    user_id = callback_query.from_user.id
+    if await is_subscribed(user_id):
+        await callback_query.message.delete()
+        # إعادة توجيه المستخدم إلى بداية البوت
+        await start_pm(client, callback_query.message, get_string("ar"))
+    else:
+        await callback_query.answer("لم تشترك بعد في القناة. اشترك ثم اضغط على الزر مرة أخرى.", show_alert=True)
 
-@app.on_message(
-    filters.command(["start"])
-    & filters.group
-    & ~filters.edited
-    & ~BANNED_USERS
-)
+# معالجات أخرى للبوت (بدون تغيير)
+@app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
-async def testbot(client, message: Message, _):
-    out = start_pannel(_)
-    return await message.reply_text(
-        _["start_1"].format(
-            message.chat.title, config.MUSIC_BOT_NAME
-        ),
+async def start_gp(client, message: Message, _):
+    out = start_panel(_)
+    uptime = int(time.time() - _boot_)
+    await message.reply_photo(
+        photo=config.START_IMG_URL,
+        caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
         reply_markup=InlineKeyboardMarkup(out),
     )
+    return await add_served_chat(message.chat.id)
 
-
-welcome_group = 2
-
-
-@app.on_message(filters.new_chat_members, group=welcome_group)
+@app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
-    chat_id = message.chat.id
-    if config.PRIVATE_BOT_MODE == str(True):
-        if not await is_served_private_chat(message.chat.id):
-            await message.reply_text(
-                "**بوت الموسيقى الخاص**\n\nفقط للدردشات المصرح بها من المالك. اطلب من المالك السماح لدردشتك أولاً."
-            )
-            return await app.leave_chat(message.chat.id)
-    else:
-        await add_served_chat(chat_id)
     for member in message.new_chat_members:
         try:
             language = await get_lang(message.chat.id)
             _ = get_string(language)
+            if await is_banned_user(member.id):
+                try:
+                    await message.chat.ban_member(member.id)
+                except:
+                    pass
             if member.id == app.id:
-                chat_type = message.chat.type
-                if chat_type != "supergroup":
-                    await message.reply_text(_["start_6"])
+                if message.chat.type != ChatType.SUPERGROUP:
+                    await message.reply_text(_["start_4"])
                     return await app.leave_chat(message.chat.id)
-                if chat_id in await blacklisted_chats():
+                if message.chat.id in await blacklisted_chats():
                     await message.reply_text(
-                        _["start_7"].format(
-                            f"https://t.me/{app.username}?start=sudolist"
-                        )
+                        _["start_5"].format(
+                            app.mention,
+                            f"https://t.me/{app.username}?start=sudolist",
+                            config.YAFA_CHANNEL,
+                        ),
+                        disable_web_page_preview=True,
                     )
-                    return await app.leave_chat(chat_id)
-                userbot = await get_assistant(message.chat.id)
-                out = start_pannel(_)
-                await message.reply_text(
-                    _["start_3"].format(
-                        config.MUSIC_BOT_NAME,
-                        userbot.username,
-                        userbot.id,
+                    return await app.leave_chat(message.chat.id)
+
+                out = start_panel(_)
+                await message.reply_photo(
+                    photo=config.START_IMG_URL,
+                    caption=_["start_3"].format(
+                        message.from_user.first_name,
+                        app.mention,
+                        message.chat.title,
+                        app.mention,
                     ),
                     reply_markup=InlineKeyboardMarkup(out),
                 )
-            if member.id in config.OWNER_ID:
-                return await message.reply_text(
-                    _["start_4"].format(
-                        config.MUSIC_BOT_NAME, member.mention
-                    )
-                )
-            if member.id in SUDOERS:
-                return await message.reply_text(
-                    _["start_5"].format(
-                        config.MUSIC_BOT_NAME, member.mention
-                    )
-                )
-            return
-        except:
-            return
+                await add_served_chat(message.chat.id)
+                await message.stop_propagation()
+        except Exception as ex:
+            print(ex)
