@@ -57,25 +57,11 @@ async def aTari(client: Client, message: Message):
             "⇜ عليك الاشتـراك في قنـاة البـوت لـ استخـدام الاوامـر",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton(f" {channel_name}", url=f"https://t.me/{BiLaL}")]]
-            ),
+            )
         )
 
     
-    import random
-    rl = random.randint(2, 2301)
-    url = f"https://t.me/AudiosWaTaN/{rl}"
-    
-    await message.reply_voice(
-        url,
-        caption="≭︰تم اختيار اغنية لك 🎶",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("قناة البوت 📢", url=f"https://t.me/{BiLaL}")
-                ]
-            ]
-        )
-    )
+
 
     # إذا مشترك يجيب رقم عشوائي من 2 إلى 2301
     rl = random.randint(2, 2301)
