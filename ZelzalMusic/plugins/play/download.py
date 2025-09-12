@@ -115,36 +115,42 @@ async def shell_cmd(cmd):
         return f"Command error: {str(e)}"
 
 async def download_audio_with_progress(link, title, message, m):
-    """تحميل الصوت مع عرض التقدم"""
+    """تحميل الصوت بسرعة مع عرض التقدم"""
     try:
         cookies_file = cookie_txt_file() or ""
         output_template = f"{title}.%(ext)s"
-        
+
         ydl_opts = {
-            'format': 'bestaudio/best',
+            'format': 'bestaudio[ext=m4a]/bestaudio/best',
             'outtmpl': output_template,
             'quiet': False,
             'no_warnings': False,
             'cookiefile': cookies_file if cookies_file else None,
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '320',
-            }],
+            'concurrent_fragment_downloads': 8,   # تحميل متوازي
+            'http_chunk_size': 10485760,          # 10MB لكل جزء
             'progress_hooks': [lambda d: progress_hook(d, message, m)],
         }
-        
+
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([link])
-        
-        audio_file = f"{title}.mp3"
-        if os.path.exists(audio_file):
-            return audio_file, None
+            info = ydl.extract_info(link, download=True)
+            audio_file = ydl.prepare_filename(info)
+
+        # إذا الملف طلع m4a → حوله mp3 بجودة عالية
+        final_file = f"{title}.mp3"
+        if audio_file.endswith(".m4a"):
+            os.system(f'ffmpeg -i "{audio_file}" -vn -ab 320k -ar 44100 -y "{final_file}"')
+            if os.path.exists(audio_file):
+                os.remove(audio_file)
         else:
-            return None, "File was not created"
-            
+            final_file = audio_file
+
+        if os.path.exists(final_file):
+            return final_file, None
+        else:
+            return None, "❌ الملف ما انحفظ"
+
     except Exception as e:
-        return None, str(e)
+        return None, f"⚠️ خطأ أثناء التحميل: {str(e)}"
 
 def progress_hook(d, message, m):
     """عرض تقدم التحميل"""
