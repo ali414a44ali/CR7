@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant
+from functools import wraps
 import config
 
 CHANNEL_USERNAME = "@shahmplus"
@@ -18,7 +19,7 @@ async def check_subscription(client: Client, user_id: int):
         return False
 
 def subscription_required(func):
-    @filters.wraps(func)
+    @wraps(func)
     async def wrapper(client: Client, message: Message):
         user_id = message.from_user.id
         
