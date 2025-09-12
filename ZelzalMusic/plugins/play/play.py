@@ -6,8 +6,8 @@ import random
 import string
 
 from ZelzalMusic.plugins.play.filters import command
-from pyrogram import filters
-from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
+from pyrogram import filters, enums
+from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message, InlineKeyboardButton
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
@@ -29,6 +29,31 @@ from ZelzalMusic.utils.logger import play_logs
 from ZelzalMusic.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 
+# دالة للتحقق من اشتراك المستخدم في القناة
+async def is_subscribed(user_id):
+    try:
+        member = await app.get_chat_member("Shahmplus", user_id)
+        if member.status in [enums.ChatMemberStatus.OWNER, enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.MEMBER]:
+            return True
+        return False
+    except Exception as e:
+        print(f"Error checking subscription: {e}")
+        return False
+
+# دالة لإرسال رسالة طلب الاشتراك
+async def send_subscription_message(message):
+    channel_name = "Shahmplus"
+    await message.reply_text(
+        f"**مرحبًا {message.from_user.mention} 👋**\n\n"
+        "**عذرًا، يجب عليك الاشتراك في قناتنا أولاً لاستخدام أوامر التشغيل.**\n\n"
+        "**➥ قناة البوت: @Shahmplus**\n\n"
+        "**بعد الاشتراك، اضغط على زر 'تفحص الاشتراك' أدناه.**",
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("قناة البوت ⚡", url=f"https://t.me/{channel_name}")],
+            [InlineKeyboardButton("تفحص الاشتراك ♻️", callback_data="check_subscription_play")]
+        ]),
+        disable_web_page_preview=True
+    )
 
 @app.on_message(
     command(
@@ -60,6 +85,11 @@ async def play_commnd(
     url,
     fplay,
 ):
+    # التحقق من اشتراك المستخدم في القناة
+    user_id = message.from_user.id
+    if not await is_subscribed(user_id):
+        return await send_subscription_message(message)
+    
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
@@ -443,6 +473,15 @@ async def play_commnd(
 @app.on_callback_query(filters.regex("MusicStream") & ~BANNED_USERS)
 @languageCB
 async def play_music(client, CallbackQuery, _):
+    # التحقق من اشتراك المستخدم في القناة
+    user_id = CallbackQuery.from_user.id
+    if not await is_subscribed(user_id):
+        try:
+            await CallbackQuery.message.delete()
+        except:
+            pass
+        return await send_subscription_message(CallbackQuery.message)
+    
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
     vidid, user_id, mode, cplay, fplay = callback_request.split("|")
@@ -513,7 +552,7 @@ async def play_music(client, CallbackQuery, _):
 async def anonymous_check(client, CallbackQuery):
     try:
         await CallbackQuery.answer(
-            "» ʀᴇᴠᴇʀᴛ ʙᴀᴄᴋ ᴛᴏ ᴜsᴇʀ ᴀᴄᴄᴏᴜɴᴛ :\n\nᴏᴘᴇɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ sᴇᴛᴛɪɴɢs.\n-> ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs\n-> ᴄʟɪᴄᴋ ᴏɴ ʏᴏᴜʀ ɴᴀᴍᴇ\n-> ᴜɴᴄʜᴇᴄᴋ ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs.",
+            "» ʀᴇᴠᴇʀᴛ ʙᴀᴄᴋ ᴛᴏ ᴜsᴇʀ ᴀᴄᴄᴏᴜɴᴛ :\n\nᴏᴘᴇɴ ʏᴏᴜʀ ɢʢʀᴏᴜᴘ sᴇᴛᴛɪɴɢs.\n-> ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs\n-> ᴄʟɪᴄᴋ ᴏɴ ʏᴏᴜʀ ɴᴀᴍᴇ\n-> ᴜɴᴄʜᴇᴄᴋ ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs.",
             show_alert=True,
         )
     except:
@@ -523,6 +562,15 @@ async def anonymous_check(client, CallbackQuery):
 @app.on_callback_query(filters.regex("ZelzalyPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
+    # التحقق من اشتراك المستخدم في القناة
+    user_id = CallbackQuery.from_user.id
+    if not await is_subscribed(user_id):
+        try:
+            await CallbackQuery.message.delete()
+        except:
+            pass
+        return await send_subscription_message(CallbackQuery.message)
+    
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
     (
@@ -610,6 +658,15 @@ async def play_playlists_command(client, CallbackQuery, _):
 @app.on_callback_query(filters.regex("slider") & ~BANNED_USERS)
 @languageCB
 async def slider_queries(client, CallbackQuery, _):
+    # التحقق من اشتراك المستخدم في القناة
+    user_id = CallbackQuery.from_user.id
+    if not await is_subscribed(user_id):
+        try:
+            await CallbackQuery.message.delete()
+        except:
+            pass
+        return await send_subscription_message(CallbackQuery.message)
+    
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
     (
@@ -669,3 +726,16 @@ async def slider_queries(client, CallbackQuery, _):
         return await CallbackQuery.edit_message_media(
             media=med, reply_markup=InlineKeyboardMarkup(buttons)
         )
+
+# معالج للتحقق من الاشتراك عند النقر على الزر الخاص بأوامر التشغيل
+@app.on_callback_query(filters.regex("check_subscription_play"))
+async def check_subscription_play(client, CallbackQuery):
+    user_id = CallbackQuery.from_user.id
+    if await is_subscribed(user_id):
+        await CallbackQuery.message.delete()
+        # إعادة إرسال الأمر الأصلي
+        message = CallbackQuery.message
+        message.text = "/play"
+        await play_commnd(client, message, get_string("ar"), None, None, None, None, None, None)
+    else:
+        await CallbackQuery.answer("لم تشترك بعد في القناة. اشترك ثم اضغط على الزر مرة أخرى.", show_alert=True)
