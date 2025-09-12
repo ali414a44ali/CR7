@@ -7,7 +7,7 @@ load_dotenv()
 API_ID = int(getenv("API_ID", 9671629))
 API_HASH = getenv("API_HASH", "be5c84e9dc1ca0e2b53d54b71e575124")
 # Get your token from @BotFather on Telegram.
-BOT_TOKEN = getenv("BOT_TOKEN","7665348559:AAEkLMPwlJyA-A_xMTf8n9afXn589MlFSj4")
+BOT_TOKEN = getenv("BOT_TOKEN","8081591964:AAHSWe_2HsZ_CAPAPPCGQovHQqB5Yraoy7w")
 BOT_NAME= getenv("BOT_NAME","بوت")
 MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "MaTrIx Music")
 # Get your mongo url from cloud.mongodb.com
@@ -58,26 +58,26 @@ votemode = {}
 autoclean = []
 confirmer = {}
 START_IMG_URL = getenv(
-    "START_IMG_URL", "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
+    "START_IMG_URL", "matrix.png"
 )
 PING_IMG_URL = getenv(
-    "PING_IMG_URL", "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
+    "PING_IMG_URL", "matrix.png"
 )
 if not MUSIC_BOT_NAME.isascii():
     print(
         "[ERROR] - You've defined MUSIC_BOT_NAME wrong. Please don't use any special characters or Special font for this... Keep it simple and small."
     )
     sys.exit()
-PLAYLIST_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-STATS_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-TELEGRAM_AUDIO_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-TELEGRAM_VIDEO_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-STREAM_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-SOUNCLOUD_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-YOUTUBE_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-SPOTIFY_ARTIST_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-SPOTIFY_ALBUM_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
-SPOTIFY_PLAYLIST_IMG_URL = "https://graph.org/file/de8dc2aef9a2636c6d2a4.jpg"
+PLAYLIST_IMG_URL = "matrix.png"
+STATS_IMG_URL = "matrix.png"
+TELEGRAM_AUDIO_URL = "matrix.png"
+TELEGRAM_VIDEO_URL = "matrix.png"
+STREAM_IMG_URL = "matrix.png"
+SOUNCLOUD_IMG_URL = "matrix.png"
+YOUTUBE_IMG_URL = "matrix.png"
+SPOTIFY_ARTIST_IMG_URL = "matrix.png"
+SPOTIFY_ALBUM_IMG_URL = "matrix.png"
+SPOTIFY_PLAYLIST_IMG_URL = "matrix.png"
 def time_to_seconds(time):
     stringt = str(time)
     return sum(int(x) * 60**i for i, x in enumerate(reversed(stringt.split(":"))))
