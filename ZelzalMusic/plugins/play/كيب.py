@@ -1,3 +1,11 @@
+#
+# Copyright (C) 2024-2026 by JUSTATARI@Github, < https://github.com/JUSTATARI >.
+#
+# This file is part of < https://github.com/JUSTATARI/VBTB > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/JUSTATARI/VBTB/blob/master/LICENSE >
+#
+# All rights reserved.
 
 import os
 import asyncio
@@ -35,7 +43,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -50,7 +58,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -65,7 +73,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -80,7 +88,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -98,7 +106,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -114,7 +122,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -131,7 +139,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -146,7 +154,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -162,7 +170,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -177,7 +185,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -192,7 +200,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -208,7 +216,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -223,7 +231,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -238,7 +246,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -253,7 +261,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -268,7 +276,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -283,12 +291,19 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
                            )
-  
+    #
+# Copyright (C) 2024-2026 by JUSTATARI@Github, < https://github.com/JUSTATARI >.
+#
+# This file is part of < https://github.com/JUSTATARI/VBTB > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/JUSTATARI/VBTB/blob/master/LICENSE >
+#
+# All rights reserved.
 
 @app.on_message(command(["• شعر •","شعر"]) & filters.private)
 async def aTari(client: Client, message: Message):
@@ -299,7 +314,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -314,7 +329,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -330,7 +345,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -346,7 +361,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -361,7 +376,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -377,7 +392,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -392,7 +407,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -407,7 +422,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
         )
@@ -422,7 +437,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
     )    
@@ -437,7 +452,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
     )
@@ -452,7 +467,7 @@ async def aTari(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text=config.CH_US, url=lnk)
+                        text=config.CHANNEL_NAME, url=lnk)
                 ],
             ]
     )
