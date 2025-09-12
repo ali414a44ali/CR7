@@ -118,7 +118,7 @@ async def start_pm(client, message: Message, _):
                 InlineKeyboardButton("السورس", url="https://t.me/Shahmplus"),
                 InlineKeyboardButton("المطور", url="https://t.me/Shahm41")
             ],
-            [InlineKeyboardButton("اضفني الى مجموعتك", url="https://t.me/startgroup=true")]
+            [InlineKeyboardButton("اضفني الى مجموعتك", url="https://t.me/physical2bot?startgroup=true")]
         ])
         
         await message.reply("<b>اهلا بك عزيز المستخدم ⚡ ،</b>")
