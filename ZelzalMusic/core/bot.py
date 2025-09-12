@@ -5,7 +5,7 @@ from ..logging import LOGGER
 # 𝐃𝐞𝐩𝐥𝐨𝐲𝐞𝐝 ⛥ 𓏺 Yousef .tele_https://t.me/y_o_v
 class Zelzaly(Client):
     def __init__(self):
-        LOGGER("ميــوزك بحر").info(f"جارِ بدء تشغيل البوت . . .")
+        LOGGER("ميــوزك ماتركس").info(f"جارِ بدء تشغيل البوت . . .")
         super().__init__(
             name="YousefMusic",
             api_id=config.API_ID,
@@ -34,6 +34,6 @@ class Zelzaly(Client):
                 f"Bot has failed to access the log group/channel.\n  Reason : {type(ex).__name__}."
             )
             exit()
-        LOGGER("ميــوزك بحر").info(f" تم بدء تشغيل البوت {self.name} ...✓")
+        LOGGER("ميــوزك ماتركس").info(f" تم بدء تشغيل البوت {self.name} ...✓")
     async def stop(self):
         await super().stop()
