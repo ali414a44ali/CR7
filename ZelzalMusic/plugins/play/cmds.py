@@ -22,7 +22,7 @@ async def zdatsr(client: Client, message: Message):
     name = usr.first_name
     usrnam = usr.username
     await message.reply_photo(
-        photo=f"photo_path = "ZelzalMusic/plugins/play/matrix.jpg",
+        photo="ZelzalMusic/plugins/play/matrix.jpg",
         caption=f"""<b>» مرحبـاً بك عـزيـزي </b> {message.from_user.mention} .\n\n<b>» استخـدم الازرار بالاسفـل 𝄞\n» لـ تصفـح اوامـر الميـوزك 🥁</b>""",
         reply_markup=InlineKeyboardMarkup(
             [
