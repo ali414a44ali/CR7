@@ -115,10 +115,10 @@ async def start_pm(client, message: Message, _):
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("لتنصيب بوت مماثل", url="https://t.me/your_bot_deployment_link")],
             [
-                InlineKeyboardButton("السورس", url="https://t.me/Shahmplus"),
-                InlineKeyboardButton("المطور", url="https://t.me/Shahm41")
+                InlineKeyboardButton("uPDate", url="https://t.me/Shahmplus"),
+                InlineKeyboardButton("DevloPers", url="https://t.me/Shahm41")
             ],
-            [InlineKeyboardButton("اضفني الى مجموعتك", url="https://t.me/physical2bot?startgroup=true")]
+            [InlineKeyboardButton("aDD Me To Your Groups", url="https://t.me/physical2bot?startgroup=true")]
         ])
         
         await message.reply("<b>اهلا بك عزيز المستخدم ⚡ ،</b>")
