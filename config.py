@@ -30,6 +30,7 @@ UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
 GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  # Fill this variable if your upstream repository is private
+CHANNEL_NAME = getenv ("CHANNEL_NAME"," Source MaTriX • سـورس ماتركـس") 
 CH_US = getenv("CH_US", "shahmplus")
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/Shahmplus")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/Shahmplus")
