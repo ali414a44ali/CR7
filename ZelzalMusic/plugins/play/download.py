@@ -1,46 +1,41 @@
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ ʑᴇʟᴢᴀʟ_ᴍᴜsɪᴄ ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯  T.me/ZThon   ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ T.me/Zelzal_Music ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-
 import os
 import requests
+import config
 import aiohttp
 import aiofiles
+from YousefMusic.platforms.Youtube import cookie_txt_file
+
 import yt_dlp
 from yt_dlp import YoutubeDL
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
-from pyrogram.types import Message, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import Message, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 from youtube_search import YoutubeSearch
 
 from ZelzalMusic import app
 from ZelzalMusic.plugins.play.filters import command
-from config import CH_US
 
 def remove_if_exists(path):
     if os.path.exists(path):
         os.remove(path)
-
-
-@app.on_message(command(["/song", "بحث", "/music","يوت"]))
+channel = config.CHANNEL_SUDO              
+lnk = config.CHANNEL_LINK
+Nem = config.BOT_NAME + " ابحث"
+@app.on_message(command(["يوت", "نزل", "بحث", Nem]))
 async def song_downloader(client, message: Message):
     query = " ".join(message.command[1:])
-    m = await message.reply_text("<b>⇜ جـارِ البحث عـن المقطـع الصـوتـي . . .</b>")
+    m = await message.reply_text("<b>⇜ جـارِ البحث ..</b>")
     
-    # تحديد مسار ملف cookies
-    cookies_path = os.path.join("cookies", "cookies.txt")
-    
-    ydl_ops = {
-        'format': 'bestaudio[ext=m4a]',
-        'keepvideo': True,
-        'prefer_ffmpeg': False,
-        'geo_bypass': True,
-        'outtmpl': '%(title)s.%(ext)s',
-        'quite': True,
-        # إضافة ملف cookies إذا كان موجودًا
-        'cookiefile': cookies_path if os.path.exists(cookies_path) else None,
+    ydl_opts = {
+        "format": "bestaudio[ext=m4a]",
+        "keepvideo": True,
+        "prefer_ffmpeg": False,
+        "geo_bypass": True,
+        "outtmpl": "%(title)s.%(ext)s",
+        "quiet": True,
+        "cookiefile": cookie_txt_file(),  # إضافة هذا السطر لتمرير ملف الكوكيز
     }
-    
+
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
@@ -52,24 +47,25 @@ async def song_downloader(client, message: Message):
         duration = results[0]["duration"]
 
     except Exception as e:
-        await m.edit("- لم يتم العثـور على نتائج ؟!\n- حـاول مجـدداً . . .")
+        await m.edit("- لم يتم العثـور على نتائج حاول مجددا")
         print(str(e))
         return
-        
-    await m.edit("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
+    
+    await m.edit("<b>جاري التحميل ♪</b>")
+    
     try:
-        with yt_dlp.YoutubeDL(ydl_ops) as ydl:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f"𖡃 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ @{app.username} "
-        button = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text=app.name, url=f"t.me/{CH_US}")]])
+        
+        rep = f"ᏟᎻᎪΝΝᎬᏞ 𓏺 @{channel} "
         host = str(info_dict["uploader"])
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
-        await m.edit("<b>⇜ جـارِ الرفـع ▬▬ . . .</b>")
+        
         await message.reply_audio(
             audio=audio_file,
             caption=rep,
@@ -77,12 +73,18 @@ async def song_downloader(client, message: Message):
             performer=host,
             thumb=thumb_name,
             duration=dur,
-            reply_markup=button
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(text="كِتابات خَارج السرب", url=f"https://t.me/cecrr"),
+                    ],
+                ]
+            ),
         )
         await m.delete()
 
     except Exception as e:
-        await m.edit("» حدث خطأ أثناء البحث حاول مره اخرى")
+        await m.edit("error, wait for bot owner to fix")
         print(e)
 
     try:
