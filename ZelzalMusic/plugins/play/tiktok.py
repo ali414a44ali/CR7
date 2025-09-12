@@ -3,7 +3,8 @@ import requests
 import urllib.request
 from bs4 import BeautifulSoup
 from pyrogram import Client, filters
-from pyrogram.types import Message
+from pyrogram.types import Message, CallbackQuery
+from pyrogram.types import InlineKeyboardMarkup as Markup, InlineKeyboardButton as Button
 from ZelzalMusic import app
 from ZelzalMusic.plugins.play.filters import command
 
