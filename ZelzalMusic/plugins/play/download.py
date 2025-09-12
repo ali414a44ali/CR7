@@ -4,11 +4,12 @@ import requests
 import yt_dlp
 from yt_dlp import YoutubeDL
 from youtube_search import YoutubeSearch
-from ZelzalMusic import app, config
+from ZelzalMusic import app
 from ZelzalMusic.platforms.Youtube import cookie_txt_file
 from ZelzalMusic.plugins.play.filters import command
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-
+import config 
+from config import CH_US
 
 def remove_if_exists(path):
     if os.path.exists(path):
