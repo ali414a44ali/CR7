@@ -14,7 +14,7 @@ from ZelzalMusic import app
 from config import OWNER_ID, LOGGER_ID
 
 
-@app.on_message(command(["ميوزك", "الميوزك", "الاغاني"]))
+@app.on_message(command(["ميوزك", "الميوزك", "الاغاني","الاوامر"]))
 async def zdatsr(client: Client, message: Message):
     if len(message.command) > 1:
         return
