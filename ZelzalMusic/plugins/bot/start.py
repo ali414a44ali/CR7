@@ -108,20 +108,30 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʜᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
+        # إنشاء الأزرار المطلوبة
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("لتنصيب بوت مماثل", url="https://t.me/your_bot_deployment_link")],
+            [
+                InlineKeyboardButton("السورس", url="https://t.me/Shahmplus"),
+                InlineKeyboardButton("المطور", url="https://t.me/Shahm41")
+            ],
+            [InlineKeyboardButton("اضفني الى مجموعتك", url="https://t.me/your_bot_username?startgroup=true")]
+        ])
+        
         await message.reply("<b>اهلا بك عزيز المستخدم ⚡ ،</b>")
         if client.me.photo:
-            async for photo in app.get_chat_photos("me",limit=1):
+            async for photo in app.get_chat_photos("me", limit=1):
                 start_img = photo.file_id
         else:
             start_img = config.START_IMG_URL
-        out = private_panel(_)
+        
         await message.reply_photo(
             photo=start_img,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
-            reply_markup=InlineKeyboardMarkup(out),
+            reply_markup=keyboard,
         )
         if await is_on_off(2):
             return await app.send_message(
