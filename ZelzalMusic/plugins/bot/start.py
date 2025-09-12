@@ -48,8 +48,8 @@ async def start_pm(client, message: Message, _):
             "**➥ قناة البوت: @Shahmplus**\n\n"
             "**بعد الاشتراك، اضغط على زر 'تفحص الاشتراك' أدناه.**",
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("قناة البوت ⚡", url=f"https://t.me/{channel_name}")],
-                [InlineKeyboardButton("تفحص الاشتراك ♻️", callback_data="check_subscription")]
+                [InlineKeyboardButton("قنـاة الاشـتراك", url=f"https://t.me/{channel_name}")],
+                [InlineKeyboardButton("التحقق من الاشـتراك", callback_data="check_subscription")]
             ]),
             disable_web_page_preview=True
         )
