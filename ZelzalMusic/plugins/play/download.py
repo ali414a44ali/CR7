@@ -1,116 +1,79 @@
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ ʑᴇʟᴢᴀʟ_ᴍᴜsɪᴄ ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯  T.me/ZThon   ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ T.me/Zelzal_Music ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-
-import os
-import requests
+import os, re, requests
 import yt_dlp
-from pyrogram import Client
-from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
+from yt_dlp import YoutubeDL
 from youtube_search import YoutubeSearch
 from ZelzalMusic import app
 from ZelzalMusic.plugins.play.filters import command
-from config import CH_US
+from ZelzalMusic.platforms.Youtube import cookie_txt_file
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+
 
 def remove_if_exists(path):
     if os.path.exists(path):
         os.remove(path)
 
-# دالة لتحميل الكوكيز من الملف
-def load_cookies():
-    cookies_path = "cookies/cookies.txt"
-    cookies = {}
-    
-    if os.path.exists(cookies_path):
-        try:
-            with open(cookies_path, 'r') as file:
-                for line in file:
-                    if line.strip() and not line.startswith('#'):
-                        if '\t' in line:
-                            # تنسيق Netscape cookies
-                            parts = line.strip().split('\t')
-                            if len(parts) >= 7:
-                                domain, flag, path, secure, expiration, name, value = parts[:7]
-                                cookies[name] = value
-                        elif '=' in line:
-                            # تنسيق بسيط name=value
-                            name, value = line.strip().split('=', 1)
-                            cookies[name] = value
-        except Exception as e:
-            print(f"خطأ في تحميل الكوكيز: {e}")
-    
-    return cookies
 
-@app.on_message(command(["/song", "بحث", "/music", "يوت", "نزل"]))
+@app.on_message(command(["يوت", "نزل", "بحث"]))
 async def song_downloader(client, message: Message):
-    # تحميل الكوكيز قبل أي عملية
-    cookies = load_cookies()
-    
     query = " ".join(message.command[1:])
-    m = await message.reply_text("<b>⇜ جـارِ البحث عـن المقطـع الصـوتـي . . .</b>")
-    
-    # إضافة الكوكيز إلى إعدادات yt-dlp
-    ydl_ops = {
-        'format': 'bestaudio[ext=m4a]',
-        'keepvideo': True,
-        'prefer_ffmpeg': False,
-        'geo_bypass': True,
-        'outtmpl': '%(title)s.%(ext)s',
-        'quiet': True,
-        'cookies': cookies,  # إضافة الكوكيز
+    m = await message.reply_text("<b>⇜ جـارِ البحث ..</b>")
+
+    ydl_opts = {
+        "format": "bestaudio[ext=m4a]",
+        "outtmpl": "%(title)s.%(ext)s",
+        "quiet": True,
+        "cookiefile": cookie_txt_file(),  # لازم يرجع path صحيح
     }
-    
+
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
+        if not results:
+            await m.edit("⚠️ ماكو نتائج للبحث")
+            return
+
+        title = re.sub(r'[\\/*?:"<>|]', "", results[0]["title"])[:40]
         link = f"https://youtube.com{results[0]['url_suffix']}"
-        title = results[0]["title"][:40]
         thumbnail = results[0]["thumbnails"][0]
         thumb_name = f"{title}.jpg"
-        thumb = requests.get(thumbnail, allow_redirects=True)
-        open(thumb_name, "wb").write(thumb.content)
-        duration = results[0]["duration"]
+        with open(thumb_name, "wb") as f:
+            f.write(requests.get(thumbnail).content)
+
+        duration = results[0].get("duration", "0:00")
 
     except Exception as e:
-        await m.edit("- لم يتم العثـور على نتائج ؟!\n- حـاول مجـدداً . . .")
+        await m.edit("- لم يتم العثـور على نتائج حاول مجددا")
         print(str(e))
         return
-        
-    await m.edit("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
+
+    await m.edit("<b>جاري التحميل ♪</b>")
+
     try:
-        with yt_dlp.YoutubeDL(ydl_ops) as ydl:
-            info_dict = ydl.extract_info(link, download=False)
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(link, download=True)
             audio_file = ydl.prepare_filename(info_dict)
-            ydl.process_info(info_dict)
-        rep = f"𖡃 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ @{app.username} "
-        button = InlineKeyboardMarkup(
-            inline_keyboard=[
-                [InlineKeyboardButton(text=app.name, url=f"t.me/{CH_US}")]
-                
-            ]
-        )
-        host = str(info_dict["uploader"])
+
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
-        await m.edit("<b>⇜ جـارِ الرفـع ▬▬ . . .</b>")
+
         await message.reply_audio(
             audio=audio_file,
-            caption=rep,
+            caption=f"ᏟᎻᎪΝΝᎬᏞ 𓏺 @{config.CH_US} ",
             title=title,
-            performer=host,
+            performer=str(info_dict.get("uploader", "YouTube")),
             thumb=thumb_name,
             duration=dur,
-            reply_markup=button
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text="• 𝐒𝐨𝐮𝐫𝐜𝐞 •", url="https://t.me/shahmplus")]]
+            ),
         )
         await m.delete()
 
     except Exception as e:
-        await m.edit("» حدث خطأ أثناء البحث حاول مره اخرى")
+        await m.edit("error, wait for bot owner to fix")
         print(e)
 
-    try:
+    finally:
         remove_if_exists(audio_file)
         remove_if_exists(thumb_name)
-    except Exception as e:
-        print(e)
