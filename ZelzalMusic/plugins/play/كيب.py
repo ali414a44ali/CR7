@@ -41,17 +41,17 @@ async def aTari(client: Client, message: Message):
 
     try:
         # نتأكد اذا هو عضو بالقناة
-        member = await app.get_chat_member(force_channel, user_id)
+        member = await app.get_chat_member(BiLaL, user_id)
         if member.status in ["left", "kicked"]:
             raise Exception("مو مشترك")
     except Exception:
         try:
             # نجيب معلومات القناة (اسمها الحقيقي)
-            chat = await client.get_chat(force_channel)
+            chat = await client.get_chat(BiLaL)
             channel_name = chat.title
         except Exception:
             # احتياط اذا ما قدر يجيب الاسم، نخلي اليوزر
-            channel_name = force_channel  
+            channel_name = BiLaL
 
         return await message.reply_text(
             "⇜ عليك الاشتـراك في قنـاة البـوت لـ استخـدام الاوامـر",
@@ -71,7 +71,7 @@ async def aTari(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("قناة البوت 📢", url=f"https://t.me/{force_channel}")
+                    InlineKeyboardButton("قناة البوت 📢", url=f"https://t.me/{BiLaL}")
                 ]
             ]
         )
