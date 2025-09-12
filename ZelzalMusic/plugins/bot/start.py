@@ -113,7 +113,7 @@ async def start_pm(client, message: Message, _):
     else:
         # إنشاء الأزرار المطلوبة
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("لتنصيب بوت مماثل", url="https://t.me/your_bot_deployment_link")],
+            [InlineKeyboardButton("لتنصيب بوت مماثل", url="https://t.me/shahmplus/88")],
             [
                 InlineKeyboardButton("uPDate", url="https://t.me/Shahmplus"),
                 InlineKeyboardButton("DevloPers", url="https://t.me/Shahm41")
