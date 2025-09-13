@@ -21,20 +21,24 @@ def download_video(url: str):
         return False
 
 
-@app.on_message(command(["tt", "تيك", "tiktok"]))
-@require_subscription   # ← هذا يفرض الاشتراك قبل تنفيذ الأمر
-async def reciveURL(client, message: Message):
+@app.on_message(filters.command(["tt", "تيك", "tiktok"]))
+@require_subscription
+async def reciveURL(client: Client, message: Message):
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
 
-    if query and ("tiktok.com" in query):
-        file_path = download_video(query)
-        if file_path:
-            await message.reply_video(
-                video=file_path,
-                caption=f"𖡃 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ @{app.username} ",
-            )
-        else:
-            await message.reply_text("⚠️ ما كدرت أجيب الفيديو، جرّب رابط ثاني 🌹")
+    if not query or "tiktok.com" not in query:
+        await m.edit("⚠️ يرجى إرسال رابط تيكتوك صالح")
+        return
+
+    # تحميل الفيديو
+    file_path = download_video(query)
+    if file_path:
+        await message.reply_video(
+            video=file_path,
+            caption=f"𖡃 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ʙʏ @{client.username} ",
+        )
+    else:
+        await message.reply_text("⚠️ ما كدرت أجيب الفيديو، جرّب رابط ثاني 🌹")
 
     await m.delete()
