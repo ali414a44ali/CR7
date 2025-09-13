@@ -22,40 +22,12 @@ from ZelzalMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-# دالة للتحقق من اشتراك المستخدم في القناة
-async def is_subscribed(user_id):
-    try:
-        member = await app.get_chat_member("Shahmplus", user_id)
-        if member.status in [enums.ChatMemberStatus.OWNER, enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.MEMBER]:
-            return True
-        return False
-    except Exception as e:
-        print(f"Error checking subscription: {e}")
-        return False
+from subscription import subscription_required
 
-# معالج لفحص الاشتراك عند استخدام الأمر start
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
+@subscription_required
 async def start_pm(client, message: Message, _):
-    # التحقق من اشتراك المستخدم في القناة
-    user_id = message.from_user.id
-    if not await is_subscribed(user_id):
-        # إذا لم يكن مشتركًا، نطلب منه الاشتراك
-        channel_name = "Shahmplus"
-        await message.reply_text(
-            f"**مرحبًا {message.from_user.mention} 👋**\n\n"
-            "**عذرًا، يجب عليك الاشتراك في قناتنا أولاً لاستخدام البوت.**\n\n"
-            "**➥ قناة البوت: @Shahmplus**\n\n"
-            "**بعد الاشتراك، اضغط على زر 'تفحص الاشتراك' أدناه.**",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("قنـاة الاشـتراك", url=f"https://t.me/{channel_name}")],
-                [InlineKeyboardButton("التحقق من الاشـتراك", callback_data="check_subscription")]
-            ]),
-            disable_web_page_preview=True
-        )
-        return
-    
-    # إذا كان مشتركًا، نتابع العملية الطبيعية
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
@@ -111,14 +83,13 @@ async def start_pm(client, message: Message, _):
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʜᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
-        # إنشاء الأزرار المطلوبة
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("لتنصيب بوت مماثل", url="https://t.me/shahmplus/88")],
             [
                 InlineKeyboardButton("uPDate", url="https://t.me/Shahmplus"),
                 InlineKeyboardButton("DevloPers", url="https://t.me/Shahm41")
             ],
-            [InlineKeyboardButton("aDD Me To Your Groups", url="https://t.me/physical2bot?startgroup=true")]
+            [InlineKeyboardButton("aDD Me To Your Groups", url="https://t.me/Mat1Rix_Bot?startgroup=true")]
         ])
         
         await message.reply("<b>اهلا بك عزيز المستخدم ⚡ ،</b>")
@@ -139,18 +110,11 @@ async def start_pm(client, message: Message, _):
                 text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
             )
 
-# معالج للتحقق من الاشتراك عند النقر على الزر
 @app.on_callback_query(filters.regex("check_subscription"))
 async def check_subscription(client, callback_query: CallbackQuery):
-    user_id = callback_query.from_user.id
-    if await is_subscribed(user_id):
-        await callback_query.message.delete()
-        # إعادة توجيه المستخدم إلى بداية البوت
-        await start_pm(client, callback_query.message, get_string("ar"))
-    else:
-        await callback_query.answer("لم تشترك بعد في القناة. اشترك ثم اضغط على الزر مرة أخرى.", show_alert=True)
+    from subscription import subscription_callback_handler
+    await subscription_callback_handler(client, callback_query)
 
-# معالجات أخرى للبوت (بدون تغيير)
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def start_gp(client, message: Message, _):
