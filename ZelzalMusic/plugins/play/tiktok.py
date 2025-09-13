@@ -22,15 +22,12 @@ def download_video(url: str):
 
 
 @app.on_message(filters.command(["tt", "تيك", "tiktok"]))
+@require_subscription
 async def reciveURL(client: Client, message: Message):
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
 
-    if not query or "tiktok.com" not in query:
-        await m.edit("⚠️ يرجى إرسال رابط تيكتوك صالح")
-        return
-
-    # تحميل الفيديو
+    if query and ("tiktok.com" in query):
     file_path = download_video(query)
     if file_path:
         await message.reply_video(
