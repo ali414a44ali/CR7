@@ -28,7 +28,7 @@ async def reciveURL(client: Client, message: Message):
     m = await message.reply_text("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
 
     if query and ("tiktok.com" in query):
-    file_path = download_video(query)
+        file_path = download_video(query)
     if file_path:
         await message.reply_video(
             video=file_path,
