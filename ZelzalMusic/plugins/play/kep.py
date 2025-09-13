@@ -38,7 +38,7 @@ from subscription import subscription_required
 lnk= "" +config.SUPPORT_CHANNEL
           
 @app.on_message(command(["غنيلي","• غنيلي •"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,2301)
     url = f"https://t.me/AudiosWaTaN/{rl}"
@@ -54,7 +54,7 @@ async def aTari(client: Client, message: Message):
                              )
 #حقو.ق س.ورس اك.سي
 @app.on_message(command(["فويز","• فويز •"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,580)
     url = f"https://t.me/AudiosWaTaN/{rl}"
@@ -70,7 +70,7 @@ async def aTari(client: Client, message: Message):
                              )
 
 @app.on_message(command(["ريمكس","•ريمكس•"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,279)
     url = f"https://t.me/remixsource/{rl}"
@@ -86,7 +86,7 @@ async def aTari(client: Client, message: Message):
                              )
 
 @app.on_message(command(["راب","• راب •"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,86)
     url = f"https://t.me/RapEthan/{rl}"
@@ -105,7 +105,7 @@ async def aTari(client: Client, message: Message):
 #اتاري
 #v..vi-.zi.n.n
 @app.on_message(command(["• صور •","صور"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(1,107)
     url = f"https://t.me/LKKKKV/{rl}"
@@ -122,7 +122,7 @@ async def aTari(client: Client, message: Message):
 
 
 @app.on_message(command(["• انمي •", "انمي"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,999)
     url = f"https://t.me/AnimeWaTaN/{rl}"
@@ -140,7 +140,7 @@ async def aTari(client: Client, message: Message):
 #اتاري
 #v..vi.+zi.n.n
 @app.on_message(command(["• متحركة •", "متحركة"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,925)
     url = f"https://t.me/GifWaTaN/{rl}"
@@ -156,7 +156,7 @@ async def aTari(client: Client, message: Message):
     )
 
 @app.on_message(command(["• اقتباسات •", "اقتباسات"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,90)
     url = f"https://t.me/LoreBots9/{rl}"
@@ -173,7 +173,7 @@ async def aTari(client: Client, message: Message):
 #اتاري
 #v..vi.zi.n.;n
 @app.on_message(command(["هيدرات", "• هيدرات •"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,90)
     url = f"https://t.me/flflfldld/{rl}"
@@ -189,7 +189,7 @@ async def aTari(client: Client, message: Message):
     )
 
 @app.on_message(command(["• افتارات شباب •","افتارات شباب"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,90)
     url = f"https://t.me/QrQsQ/{rl}"
@@ -205,7 +205,7 @@ async def aTari(client: Client, message: Message):
     )
 
 @app.on_message(command(["• افتارات بنات •",""]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,90)
     url = f"https://t.me/vvyuol/{rl}"
@@ -222,7 +222,7 @@ async def aTari(client: Client, message: Message):
 
 
 @app.on_message(command(["•قران•", "قران"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(1,90)
     url = f"https://t.me/lllIIlIllIlIIlI/{rl}"
@@ -238,7 +238,7 @@ async def aTari(client: Client, message: Message):
     )
 
 @app.on_message(command(["• جداريات •","جداريات"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,61)
     url = f"https://t.me/flflflgktl/{rl}"
@@ -254,7 +254,7 @@ async def aTari(client: Client, message: Message):
                            )
 
 @app.on_message(command(["• لوكيت •","لوكيت"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(4,281)
     url = f"https://t.me/kabsjjwbs/{rl}"
@@ -270,7 +270,7 @@ async def aTari(client: Client, message: Message):
                            )
 
 @app.on_message(command(["• افلام •","افلام"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,326)
     url = f"https://t.me/Ntsjcdz/{rl}"
@@ -286,7 +286,7 @@ async def aTari(client: Client, message: Message):
                            )
 
 @app.on_message(command(["• فيديو •","فيديو"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(1,78)
     url = f"https://t.me/LKKKKT/{rl}"
@@ -302,7 +302,7 @@ async def aTari(client: Client, message: Message):
                            )
 
 @app.on_message(command(["• ستوري •","ستوري"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(1,379)
     url = f"https://t.me/storryr/{rl}"
@@ -326,7 +326,7 @@ async def aTari(client: Client, message: Message):
 # All rights reserved.
 
 @app.on_message(command(["• شعر •","شعر"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(7,622)
     url = f"https://t.me/L1BBBL/{rl}"
@@ -342,7 +342,7 @@ async def aTari(client: Client, message: Message):
                            )
 
 @app.on_message(command(["• افتارات سينمائية •","افتارات سينمائية"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(3,218)
     url = f"https://t.me/IIYIZ/{rl}"
@@ -359,7 +359,7 @@ async def aTari(client: Client, message: Message):
 #اتاري
 #v..vi......zi.n.n
 @app.on_message(command(["• افتارات فنانين• ","افتارات فنانين"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(3,214)
     url = f"https://t.me/FPPPH/{rl}"
@@ -376,7 +376,7 @@ async def aTari(client: Client, message: Message):
 #اوس
 #v..vi.zi....n.n.......
 @app.on_message(command(["• قيفات شباب •","قيفات شباب","متحركات شباب"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,21)
     url = f"https://t.me/dldldldlgt/{rl}"
@@ -392,7 +392,7 @@ async def aTari(client: Client, message: Message):
                            )
 
 @app.on_message(command(["• قيفات بنات •","قيفات بنات","متحركات بنات"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,22)
     url = f"https://t.me/lflflrofo/{rl}"
@@ -409,7 +409,7 @@ async def aTari(client: Client, message: Message):
 #اوسَ
 #.......v.....vi.zi.n.n......
 @app.on_message(command(["• قيفات قطط •","قيفات قطط","متحركات قطط"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,101)
     url = f"https://t.me/gsgjituops/{rl}"
@@ -425,7 +425,7 @@ async def aTari(client: Client, message: Message):
                                )
 
 @app.on_message(command(["• قيفات اطفال •","قيفات اطفال","متحركات اطفال"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,24)
     url = f"https://t.me/fmgngoclr/{rl}"
@@ -441,7 +441,7 @@ async def aTari(client: Client, message: Message):
                                )
 
 @app.on_message(command(["• قيفات رومانسية •","قيفات رومانسية","متحركات رومانسية"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,21)
     url = f"https://t.me/romansiaaa/{rl}"
@@ -457,7 +457,7 @@ async def aTari(client: Client, message: Message):
                                )
 
 @app.on_message(command(["• قيفات كيبوب •","قيفات كيبوب","متحركات كيبوب"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,25)
     url = f"https://t.me/kibobg/{rl}"
@@ -473,7 +473,7 @@ async def aTari(client: Client, message: Message):
                                )
 
 @app.on_message(command(["• قيفات كوكسال •","قيفات كوكسال","متحركات كوكسال"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,59)
     url = f"https://t.me/koksalt/{rl}"
@@ -489,7 +489,7 @@ async def aTari(client: Client, message: Message):
                                )
 
 @app.on_message(command(["• هامستر •","هامستر"]) & filters.group)
-@subscription_required
+@require_subscription
 async def aTari(client: Client, message: Message):
     rl = random.randint(2,3)
     url = f"https://t.me/asoein/{rl}"
@@ -504,8 +504,6 @@ async def aTari(client: Client, message: Message):
     )
                                )
 
-# معالج حدث التأكيد على الاشتراك
 @app.on_callback_query(filters.regex("^check_subscription$"))
-async def check_subscription_callback(client: Client, callback_query):
-    from subscription import subscription_callback_handler
-    await subscription_callback_handler(client, callback_query)
+async def check_subscription_callback(client, callback_query: CallbackQuery):
+    await subscription_manager.handle_callback(client, callback_query)
