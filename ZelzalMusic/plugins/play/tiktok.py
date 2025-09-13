@@ -22,6 +22,7 @@ def download_video(url: str):
 
 
 @app.on_message(command(["tt", "تيك", "tiktok"]))
+@require_subscription   # ← هذا يفرض الاشتراك قبل تنفيذ الأمر
 async def reciveURL(client, message: Message):
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ التحميل ▬▭ . . .</b>")
