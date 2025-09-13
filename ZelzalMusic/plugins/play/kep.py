@@ -32,7 +32,7 @@ from ZelzalMusic import app
 from random import  choice, randint
 
 # استيراد دالة الاشتراك الإجباري
-from subscription import subscription_required
+from subscription import require_subscription
 
 #بلاك
 lnk= "" +config.SUPPORT_CHANNEL
