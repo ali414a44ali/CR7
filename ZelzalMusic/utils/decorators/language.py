@@ -6,7 +6,7 @@ from ZelzalMusic.misc import SUDOERS
 from ZelzalMusic.utils.database import get_lang, is_maintenance
 from strings import get_string
 
-
+from subscription import require_subscription, subscription_manager
 def language(mystic):
     async def wrapper(_, message, **kwargs):
         if await is_maintenance() is False:
