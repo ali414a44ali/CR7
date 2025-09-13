@@ -47,7 +47,7 @@ def languageCB(mystic):
 
     return wrapper
 
-
+@require_subscription
 def LanguageStart(mystic):
     async def wrapper(_, message, **kwargs):
         try:
