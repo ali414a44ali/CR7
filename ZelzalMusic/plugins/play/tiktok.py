@@ -5,7 +5,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 from ZelzalMusic import app
 from ZelzalMusic.plugins.play.filters import command
-
+from subscription import require_subscription
 
 def download_video(url: str):
     try:
