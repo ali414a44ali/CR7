@@ -22,11 +22,11 @@ from ZelzalMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-from subscription import subscription_required
+from subscription import require_subscription, subscription_manager
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
-@subscription_required
+@require_subscription
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
@@ -110,13 +110,13 @@ async def start_pm(client, message: Message, _):
                 text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
             )
 
-@app.on_callback_query(filters.regex("check_subscription"))
-async def check_subscription(client, callback_query: CallbackQuery):
-    from subscription import subscription_callback_handler
-    await subscription_callback_handler(client, callback_query)
+@app.on_callback_query(filters.regex("^check_subscription$"))
+async def check_subscription_callback(client, callback_query: CallbackQuery):
+    await subscription_manager.handle_callback(client, callback_query)
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
+@require_subscription
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
