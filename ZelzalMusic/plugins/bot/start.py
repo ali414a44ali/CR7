@@ -25,8 +25,8 @@ from strings import get_string
 from subscription import require_subscription, subscription_manager
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
-@LanguageStart()
-@require_subscription()
+@LanguageStart
+@require_subscription
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
@@ -115,8 +115,8 @@ async def check_subscription_callback(client, callback_query: CallbackQuery):
     await subscription_manager.handle_callback(client, callback_query)
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
-@LanguageStart()
-@require_subscription()
+@LanguageStart
+@require_subscription
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
