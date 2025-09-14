@@ -1,12 +1,7 @@
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ ʑᴇʟᴢᴀʟ_ᴍᴜsɪᴄ ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯  T.me/ZThon   ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ T.me/Zelzal_Music ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-
 from ZelzalMusic.misc import SUDOERS
 from ZelzalMusic.utils.database import get_lang, is_maintenance
 from strings import get_string
 
-from subscription import require_subscription, subscription_manager
 def language(mystic):
     async def wrapper(_, message, **kwargs):
         if await is_maintenance() is False:
@@ -29,7 +24,6 @@ def language(mystic):
 
     return wrapper
 
-
 def languageCB(mystic):
     async def wrapper(_, CallbackQuery, **kwargs):
         if await is_maintenance() is False:
@@ -47,7 +41,6 @@ def languageCB(mystic):
 
     return wrapper
 
-@require_subscription()
 def LanguageStart(mystic):
     async def wrapper(_, message, **kwargs):
         try:
