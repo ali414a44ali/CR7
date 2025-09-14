@@ -1,10 +1,10 @@
-from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
+from pyrogram import Client
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant
 from functools import wraps
-import config
-
-CHANNEL_USERNAME = "shahmplus"  
+from ZelzalMusic.misc import SUDOERS
+from config import CH_US
+CHANNEL_USERNAME = CH_US
 
 class SubscriptionManager:
     def __init__(self, channel_username):
@@ -25,6 +25,9 @@ class SubscriptionManager:
     def subscription_required(self, func):
         @wraps(func)
         async def wrapper(client: Client, message: Message):
+            if message.from_user.id in SUDOERS:
+                return await func(client, message)
+            
             user_id = message.from_user.id
             is_subscribed = await self.check_subscription(client, user_id)
 
