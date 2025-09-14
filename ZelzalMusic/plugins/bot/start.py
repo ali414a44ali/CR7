@@ -1,34 +1,21 @@
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ ʑᴇʟᴢᴀʟ_ᴍᴜsɪᴄ ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯  T.me/ZThon   ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-#▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒✯ T.me/ZThon_Music ✯▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-
 import time
-
 from pyrogram import filters
-from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
-
 import config
 from ZelzalMusic import app
 from ZelzalMusic.misc import _boot_
 from ZelzalMusic.plugins.sudo.sudoers import sudoers_list
-from ZelzalMusic.utils.database import (
-    add_served_chat,
-    add_served_user,
-    blacklisted_chats,
-    get_lang,
-    is_banned_user,
-    is_on_off,
-)
+from ZelzalMusic.utils.database import add_served_chat, add_served_user
 from ZelzalMusic.utils.decorators.language import LanguageStart
 from ZelzalMusic.utils.formatters import get_readable_time
 from ZelzalMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
-
+from subscription import require_subscription
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
+@require_subscription
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
@@ -76,8 +63,8 @@ async def start_pm(client, message: Message, _):
                 reply_markup=key,
             )
 
-
-@app.on_message(filters.command(["starrt"]) & filters.group & ~BANNED_USERS)
+@app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
+@require_subscription
 @LanguageStart
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
