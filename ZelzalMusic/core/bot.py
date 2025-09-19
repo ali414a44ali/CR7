@@ -21,7 +21,7 @@ class Zelzaly(Client):
         self.username = self.me.username
         self.mention = self.me.mention
 
-        photo_path = "ZelzalMusic/core/matrix.jpg"
+        photo_path = "ZelzalMusic/core/matrix.png"
         if not os.path.exists(photo_path):
             LOGGER(__name__).error(f"الصورة غير موجودة في المسار: {photo_path}")
             photo_path = None
