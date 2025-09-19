@@ -24,7 +24,7 @@ class Zelzaly(Client):
         self.mention = self.me.mention
         
         # المسار إلى الصورة المحلية
-        photo_path = "ZelzalMusic/core/matrix.jpg"
+        photo_path = "ZelzalMusic/core/matrix.png"
         
         # التحقق من وجود الصورة
         if not os.path.exists(photo_path):
@@ -37,12 +37,12 @@ class Zelzaly(Client):
                 photo=photo_path if photo_path else "https://envs.sh/BJp.jpg",
                 caption=f"<b> {self.mention}\n تم تشغيل البـوت :\n على سورس ماتركس:\nɴᴀᴍᴇ : {self.name}\nᴜꜱᴇʀ ɴᴀᴍᴇ : @{self.username}\nɪᴅ : {self.id}</b>",
             )
-        except Exception as e:
+        except (errors.ChannelInvalid, errors.PeerIdInvalid):
             LOGGER(__name__).error(
                 "» قم باضافة البـوت مشـرفـاً بكافة الصلاحيات في مجموعـة السجـل"
             )
             exit()
-        except Exception as ex:
+        except (errors.ChannelInvalid, errors.PeerIdInvalid):
             LOGGER(__name__).error(
                 f"Bot has failed to access the log group/channel.\n  Reason : {type(ex).__name__}."
             )
