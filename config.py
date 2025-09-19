@@ -14,7 +14,7 @@ MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "MaTrIx Music")
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://Anubarlo:Anubarlo@cluster0.ioiefbq.mongodb.net/?retryWrites=true&w=majority")
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 2000))
 # Chat id of a group for logging bot's activities
-LOGGER_ID = int(getenv("LOGGER_ID",1002718737593))
+LOGGER_ID = int(getenv("LOGGER_ID","1002718737593"))
 # Get this value from @FallenxBot on Telegram by /id
 OWNER_ID = int(getenv("OWNER_ID", "6848908141"))
 ## Fill these variables if you're deploying on heroku.
