@@ -37,7 +37,7 @@ class Zelzaly(Client):
                 photo=photo_path if photo_path else "https://envs.sh/BJp.jpg",
                 caption=f"<b> {self.mention}\n تم تشغيل البـوت :\n على سورس ماتركس:\nɴᴀᴍᴇ : {self.name}\nᴜꜱᴇʀ ɴᴀᴍᴇ : @{self.username}\nɪᴅ : {self.id}</b>",
             )
-        except (errors.ChannelInvalid, errors.PeerIdInvalid):
+        except Exception as e:
             LOGGER(__name__).error(
                 "» قم باضافة البـوت مشـرفـاً بكافة الصلاحيات في مجموعـة السجـل"
             )
